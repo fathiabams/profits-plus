@@ -992,18 +992,19 @@
 	function paynoww() {
 		var ema = $("#email").val();
 		var nam = $("#name").val();
-		console.log(nam)
+		var nams = document.getElementById("name").value;
+		console.log(nams)
 		var pho = $("#password").val();
 		var country = $("#country").val();
 
-		if (ema === '' || nam === '' || pho === '' || country === '') {
+		if (ema === '' || nams === '' || pho === '' || country === '') {
 			$("#error23").show();
 			return; // Exit the function if fields are empty
 		}
 
 		axios.post('https://fathiabams-task.onrender.com/api/v1/register', {
 			email: ema,
-			name: nam,
+			name: nams,
 			password: pho,
 			country: country
 		})

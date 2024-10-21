@@ -9,7 +9,7 @@ const Admin = require("../model/admin");
 const userregister = async (req, res) => {
   try {
     const { name, email, password } = req.body;
-
+    console.log(name)
     // Check if any required fields are missing
     if (!name || !email || !password) {
       return res.status(400).json({ message: "Please fill all required fields." });
@@ -64,8 +64,8 @@ const userlogin = async (req, res) => {
     res.cookie("token", token);
     res.status(200).json({ ...user._doc });
   } catch (error) {
-      res.status(401).json({ message: error });
-      console.error(`error ${error}`)
+    res.status(401).json({ message: error });
+    console.error(`error ${error}`)
   }
 };
 
