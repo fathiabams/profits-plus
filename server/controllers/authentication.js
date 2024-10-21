@@ -49,7 +49,7 @@ const userlogin = async (req, res) => {
   }
 };
 
-// Admin Login
+
 const adminlogin = async (req, res) => {
   const { username, password } = req.body;
   const admin = await Admin.findOne({ username });
