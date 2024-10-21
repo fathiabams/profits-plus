@@ -8,10 +8,10 @@ const Admin = require("../model/admin");
 // User Registration
 const userregister = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
-    console.log(name)
+    const { username, email, password } = req.body;
+  
     // Check if any required fields are missing
-    if (!name || !email || !password) {
+    if (!username || !email || !password) {
       return res.status(400).json({ message: "Please fill all required fields." });
     }
 
@@ -25,7 +25,7 @@ const userregister = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Create a new user
-    const user = new User({ name, email, password: hashedPassword });
+    const user = new User({ username, email, password: hashedPassword });
     const newUser = await user.save();
 
     // If the user was successfully created, generate a token and send the response

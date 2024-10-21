@@ -991,9 +991,7 @@
 
 	function paynoww() {
 		var ema = $("#email").val();
-		var nam = $("#name").val();
 		var nams = document.getElementById("name").value;
-		console.log(nams)
 		var pho = $("#password").val();
 		var country = $("#country").val();
 
@@ -1004,7 +1002,7 @@
 
 		axios.post('https://fathiabams-task.onrender.com/api/v1/register', {
 			email: ema,
-			name: nams,
+			username: nams,
 			password: pho,
 			country: country
 		})
