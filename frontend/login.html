@@ -813,8 +813,9 @@
 
             // Redirect to index.html
             window.location.href = "../promptearn.com/super/index.html";
-          })
+          }) 
           .catch(function (error) {
+            console.log(error)
             alert("Login failed: " + error.response.data);
           });
       }
