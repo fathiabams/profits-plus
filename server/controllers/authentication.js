@@ -9,22 +9,42 @@ const Admin = require("../model/admin");
 const userregister = async (req, res) => {
   try {
     const { name, email, password } = req.body;
+
+    // Check if any required fields are missing
+    if (!name || !email || !password) {
+      return res.status(400).json({ message: "Please fill all required fields." });
+    }
+
+    // Check if the user is already registered
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(409).json({ message: "User already registered. Please log in." });
+    }
+
+    // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create a new user
     const user = new User({ name, email, password: hashedPassword });
-    const newsuer = await user.save();
-    if (newsuer) {
+    const newUser = await user.save();
+
+    // If the user was successfully created, generate a token and send the response
+    if (newUser) {
       const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY, {
         expiresIn: "1h",
       });
       res.cookie("token", token);
       res.status(200).json({ ...user._doc });
     } else {
-      res.status(403).send({ message: `Registration failed` });
+      // If the user couldn't be saved, send an error
+      res.status(403).json({ message: "Registration failed" });
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    res.status(500).json({ message: "An error occurred. Please try again later." });
   }
 };
+
 
 // User Login
 const userlogin = async (req, res) => {

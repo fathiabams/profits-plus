@@ -44,11 +44,6 @@
     <div class="wrapper ">
 
         <div class="sidebar" data-color="white" data-background-color="green" data-image="assets/img/sidebar-1.jpg">
-            <!--
-        Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
-
-        Tip 2: you can also add an image using data-image tag
-    -->
             <div class="logo">
                 <a href="#" class="simple-text logo-normal">
                     <img style="max-width:150px" src="../logo/prompt.png">
@@ -623,6 +618,23 @@
             // Handle case where user data is not available
             console.log('No user data found.');
         }
+        // Run this code when the index page loads
+        window.onload = function () {
+            // Get user data from localStorage
+            const userData = JSON.parse(localStorage.getItem('user'));
+            console.log(userData)
+            // Check if userData exists and populate the fields
+            if (userData) {
+                // Assuming you have fields with these IDs in your index.html
+                document.querySelector('.navbar-brand b').innerText = userData.name;
+
+                // Add more fields as needed
+            } else {
+                // Handle case where userData is not available
+                console.log("No user data found in localStorage");
+            }
+        };
+
     </script>
 
 
