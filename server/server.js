@@ -9,11 +9,10 @@ const socketIO = require("socket.io");
 const cors = require("cors");
 const corsOption = require("./config/corsOption");
 
-const io = socketIO();
+// const io = socketIO();
 
 const app = express();
 
-const socket = require("./socket");
 const connectDB = require("./config/db");
 
 app.use((req, res, next) => {
