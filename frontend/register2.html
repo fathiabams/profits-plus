@@ -496,8 +496,6 @@
 				float: none;
 				padding: 20px;
 				margin-left: 0px;
-				clear;
-				both;
 				display: block;
 			}
 
@@ -642,6 +640,7 @@
 				}
 
 			}
+		}
 	</style>
 	<section style="padding-bottom:0px; margin-bottom:0px; width:100%; height:100%; " class="featured-posts">
 
@@ -990,300 +989,44 @@
 	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 	<script>
 
-		function paynoww() {
-			var ema = $("#email").val();
-			var nam = $("#name").val();
-			var pho = $("#password").val();
-			var country = $("#country").val();
+	function paynoww() {
+		var ema = $("#email").val();
+		var nam = $("#name").val();
+		var pho = $("#password").val();
+		var country = $("#country").val();
 
-			if (ema === '' || nam === '' || pho === '' || country === '') {
-				$("#error23").show();  // Display error if fields are empty
-			} else {
-				axios.post('http://localhost:3000/api/v1/register', {
-					email: ema,
-					name: nam,
-					password: pho,
-					country: country
-				})
-					.then(function (response) {
-						// Assuming the server returns a successful response with user data
-						var userData = response.data;
-						console.log(userData)
-						// Store user data in localStorage (or sessionStorage)
-						localStorage.setItem('user', JSON.stringify(userData));
-
-						// Redirect to index.html
-						window.location.href = "../promptearn.com/super/index.html";
-					})
-					.catch(function (error) {
-						alert("An error occurred: " + error.response.data);
-					});
-			}
+		if (ema === '' || nam === '' || pho === '' || country === '') {
+			$("#error23").show();
+			return; // Exit the function if fields are empty
 		}
 
-		/* function paynoww() {
-			var ema = $("#email").val();
-			var nam = $("#name").val();
-			var pho = $("#password").val();
-			var country = $("#country").val();
+		axios.post('https://fathiabams-task.onrender.com/api/v1/register', {
+			email: ema,
+			name: nam,
+			password: pho,
+			country: country
+		})
+			.then(function (response) {
+				const userData = response.data; // Get the response data (user data)
 
-			if (ema === '' || nam === '' || pho === '' || country === '') {
-				$("#error23").show();  // Display an error if any field is empty
-			} else {
-				// Send POST request when fields are filled
-				$.ajax({
-					type: "POST",
-					url: "",
-					data: JSON.stringify({
-						email: ema,
-						name: nam,
-						password: pho,
-						country: country
-					}),
-					contentType: "application/json",
-					success: function (response) {
-						alert("Account created successfully!");
-					},
-					error: function (error) {
-						alert("An error occurred: " + error.responseText);
-					}
-				});
-			}
-		} */
-		/* function makeid(length) {
-			let result = '';
-			const characters = '0123456789';
-			const charactersLength = characters.length;
-			let counter = 0;
-			while (counter < length) {
-				result += characters.charAt(Math.floor(Math.random() * charactersLength));
-				counter += 1;
-			}
-			return result;
-		}
+				console.log(userData);
 
+				localStorage.setItem('user', JSON.stringify(userData)); // Save user data to localStorage
 
-
-
-		function SquadPay() {
-
-			var ema = $("#email").val();
-			var nam = $("#name").val();
-			var pho = $("#password").val();
-			var country = $("#country").val();
-			var reffe = "4" + makeid(15) + "5"
-
-
-			if (ema == '' || nam == '' || pho == '' || country == '') {
-				$("#error23").show();
-			} else {
-				$.ajax({
-					type: "POST",
-					url: "regopay2.php",
-					data: { "country": country, "reference": "" + reffe, "email": ema, "name": nam, "password": pho, "from": "2" },
-					success: function (html) {
-						if (html == 'done') {
-
-							const squadInstance = new squad({
-								onClose: () => console.log("Widget closed"),
-								onLoad: () => console.log(`Linked successfully`),
-								onSuccess: () => verifyTransactionOnBackend3(reffe),
-								key: "pk_7cf0356aeeb33d69db039c3cf9f91b3e28c098c7",
-								//Change key (test_pk_sample-public-key-1) to the key on your Squad Dashboard
-								email: ema,
-								transaction_ref: reffe,
-								amount: 500000,
-								//Enter amount in Naira or Dollar (Base value Kobo/cent already multiplied by 100)
-								currency_code: "NGN"
-							});
-							squadInstance.setup();
-							squadInstance.open();
-
-						} else {
-							alert(html);
-						}
-					}
-				});
-
-			}
-
-
-		}
-
-
-		function verifyTransactionOnBackend3(reff) {
-
-
-
-			var ema = $("#email").val();
-			var nam = $("#name").val();
-			var pho = $("#password").val();
-			var sourcee = "other";
-
-			setTimeout(function () {
-				window.location.replace('regopaysquadd26d.html?sourcee=' + sourcee + '&country=' + country + '&password=' + pho + '&ref=' + reff + '&name=' + nam + '&email=' + ema + '&van=' + reff);
-			}, 10000)
-		}
-
-
-
-
-		function makePayment() {
-			var ema = $("#email").val();
-			var nam = $("#name").val();
-			var pho = $("#password").val();
-			var country = $("#country").val();
-
-			var reffe = "4" + makeid(15) + "5"
-
-			if (country == 'Ghana') {
-				var pricc = 14 * 5;
-				var curr = "GHS";
-			} else if (country == 'Nigeria') {
-				var pricc = 5000;
-				var curr = "NGN";
-			} else if (country == 'United States') {
-				var pricc = 5;
-				var curr = "USD";
-			} else {
-				var pricc = 390 * 5;
-				var curr = "XAF";
-			}
-
-			$.ajax({
-				type: "POST",
-				url: "regopay2.php",
-				data: { "country": country, "reference": "" + reffe, "email": ema, "name": nam, "password": pho, "from": "2" },
-				success: function (html) {
-					if (html == 'done') {
-						FlutterwaveCheckout({
-							public_key: "FLWPUBK-3deb34e22c7f1c58ba271ab83bf0b4dc-X",
-							tx_ref: reffe,
-							amount: pricc,
-							currency: "" + curr,
-							payment_options: "card, mobilemoneyghana, ussd",
-							callback: function (payment) {
-								verifyTransactionOnBackend(payment.transaction_id, reffe);
-							},
-							onclose: function (incomplete) {
-								if (incomplete || window.verified === false) {
-									document.querySelector("#payment-failed").style.display = 'block';
-								} else {
-									document.querySelector("form").style.display = 'none';
-									if (window.verified == true) {
-										document.querySelector("#payment-success").style.display = 'block';
-									} else {
-										document.querySelector("#payment-pending").style.display = 'block';
-									}
-								}
-							},
-							meta: {
-								consumer_id: 23,
-								consumer_mac: "92a3-912ba-1192a",
-							},
-							customer: {
-								email: ema,
-								phone_number: 0023234353,
-								name: nam,
-							},
-							customizations: {
-								title: "PromptEarn",
-								description: "PrompEarn Affiliate Activation",
-								logo: "https://promptearn.com/logo/prompt.png",
-							},
-						});
-					} else {
-						alert(html);
-					}
-				}
+				window.location.href = "../promptearn.com/super/index.html"; // Redirect to another page
+			})
+			.catch(function (error) {
+				console.log(`error ${error}`);
+				alert("An error occurred: " + error.response?.data?.message || "Unknown error");
 			});
-		}
+	}
 
-		function verifyTransactionOnBackend(transactionId, reff) {
-			var ema = $("#email").val();
-			var nam = $("#name").val();
-			var pho = $("#password").val();
-			var country = $("#country").val();
-
-			var sourcee = "other";
-
-			setTimeout(function () {
-				window.location.replace('regopayd26d.html?sourcee=' + sourcee + '&country=' + country + '&password=' + pho + '&ref=' + reff + '&name=' + nam + '&email=' + ema + '&van=' + transactionId);
-			}, 10000)
-		}
-
-
-
-		function stripepay() {
-			var ema = $("#email").val();
-			var nam = $("#name").val();
-			var pho = $("#password").val();
-			var country = $("#country").val();
-
-			setTimeout(function () {
-				window.location.replace('paynow/paystripereg214c6.html?country=' + country + '&password=' + pho + '&name=' + nam + '&email=' + ema);
-			}, 100)
-		}
-
-
-		function payWithPaystack(e) {
-			var ema = $("#email").val();
-			var nam = $("#name").val();
-			var pho = $("#password").val();
-			var country = $("#country").val();
-			var reffe = "2" + makeid(15) + "5"
-
-
-			if (ema == '' || nam == '' || pho == '' || country == '') {
-				$("#error23").show();
-			} else {
-				$.ajax({
-					type: "POST",
-					url: "regopay2.php",
-					data: { "country": country, "reference": "" + reffe, "email": ema, "name": nam, "password": pho, "from": "2" },
-					success: function (html) {
-						if (html == 'done') {
-							let handler = PaystackPop.setup({
-								key: 'pk_live_823a7aad8ddcda256b4dbb3d3ab2aa0aba4594d8', // Replace with your public key
-								email: document.getElementById("email").value,
-								amount: 5000 * 100,
-								ref: '' + reffe, // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
-								// label: "Optional string that replaces customer email"
-								onClose: function () {
-									alert('Window closed.');
-								},
-								callback: function (response) {
-									let messag22e = response.reference;
-
-									var ema = $("#email").val();
-									var nam = $("#name").val();
-									var pho = $("#phone").val();
-									var sourcee = "other";
-
-
-									setTimeout(function () {
-										window.location.replace('regopaypaystackd26d.html?sourcee=' + sourcee + '&country=' + country + '&password=' + pho + '&ref=' + reffe + '&name=' + nam + '&email=' + ema + '&van=' + reffe);
-									}, 400)
-
-
-								}
-							});
-
-							handler.openIframe();
-						} else {
-							alert(html);
-						}
-					}
-				});
-
-			}
-		} */
 	</script>
 	</div>
 
 
-	/*
-	<script src="assets/js/jquery.min.js"></script> */
+
+	<script src="assets/js/jquery.min.js"></script>
 	<script src="../cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
 		integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
 		crossorigin="anonymous"></script>
@@ -1295,8 +1038,18 @@
 	<script src="assets/js/theme.js"></script>
 
 	<script src="../checkout.flutterwave.com/v3.js"></script>
-
 	<script>
+		function activateButton(element) {
+			if (element.checked) {
+				document.getElementById("submit").disabled = false;
+			} else {
+				document.getElementById("submit").disabled = true;
+			}
+		}
+	</script>
+
+
+	<!-- <script>
 
 		$('#country').on('change', function () {
 			var cou = $('#country').val();
@@ -1324,7 +1077,7 @@
 			}
 
 		}
-	</script>
+	</script> -->
 
 
 
