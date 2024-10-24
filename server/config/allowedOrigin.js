@@ -5,6 +5,5 @@ const allowedOrigin = [
     "https://fathiabams-task.onrender.com",
     "https://127.0.0.1:5502/frontend/",
     "https://fathiabams-task.vercel.app/"
-
 ];
 module.exports = allowedOrigin;

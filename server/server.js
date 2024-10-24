@@ -26,7 +26,7 @@ connectDB();
 app.use(express.json());
 app.use("/api/v1", require("./router/operations"));
 
-const port = 3000;
+const port = 3000||process.env.port
 // io.listen(1230, () => {
 //   console.log("Socket server started on port 8080");
 // });
