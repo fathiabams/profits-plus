@@ -199,7 +199,7 @@
                                         <p style="color: black">Manage Products</p>
                                     </a>
                                 </li>
-                                <li class="nav-item">
+                                <li class="nav-item active">
                                     <a class="nav-link active" href="becomeapartner.html">
                                         <i class="material-icons">library_books</i>
                                         <p style="color: black">Become a partner</p>
@@ -336,7 +336,7 @@
 
                     if (user) {
                         // Target the element with id="user-name"
-                        document.getElementById('user-name').innerText = `${user.name} 😘`;
+                        document.getElementById('user-name').innerText = `${user.username} 😘`;
                     } else {
                         console.log('No user data found.');
                     }
