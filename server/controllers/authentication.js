@@ -5,48 +5,166 @@ const jwt = require("jsonwebtoken");
 const User = require("../model/user");
 const Admin = require("../model/admin");
 
-// User Registration
-const userregister = async (req, res) => {
+// const userregister = async (req, res) => {
+//   try {
+//     const { username, email, password } = req.body;
+
+//     if (!username || !email || !password) {
+//       return res.status(400).json({ message: "Please fill all required fields." });
+//     }
+
+//     const existingUser = await User.findOne({ email });
+//     if (existingUser) {
+//       return res.status(409).json({ message: "User already registered. Please log in." });
+//     }
+
+//     const hashedPassword = await bcrypt.hash(password, 10);
+
+//     const user = new User({ username, email, password: hashedPassword });
+//     const newUser = await user.save();
+
+//     if (newUser) {
+//       const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY, {
+//         expiresIn: "1h",
+//       });
+//       res.cookie("token", token);
+//       res.status(200).json({ ...user._doc });
+//     } else {
+//       res.status(403).json({ message: "Registration failed" });
+//     }
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: "An error occurred. Please try again later." });
+//   }
+// };
+
+const userRegister = async (req, res) => {
   try {
     const { username, email, password } = req.body;
-  
-    // Check if any required fields are missing
-    if (!username || !email || !password) {
-      return res.status(400).json({ message: "Please fill all required fields." });
-    }
 
-    // Check if the user is already registered
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(409).json({ message: "User already registered. Please log in." });
+      return res.status(400).json({ message: "User already registered" });
     }
 
-    // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create a new user
     const user = new User({ username, email, password: hashedPassword });
     const newUser = await user.save();
 
-    // If the user was successfully created, generate a token and send the response
     if (newUser) {
       const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY, {
         expiresIn: "1h",
       });
-      res.cookie("token", token);
-      res.status(200).json({ ...user._doc });
+      res.cookie("token", token, { httpOnly: true, secure: true });
+
+      res.status(200).json({ ...user._doc, password: undefined });
+
+      await sendWelcomeEmail(email, username);
     } else {
-      // If the user couldn't be saved, send an error
       res.status(403).json({ message: "Registration failed" });
     }
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "An error occurred. Please try again later." });
+    console.error("Error during registration:", error);
+    res
+      .status(500)
+      .json({ message: "An error occurred. Please try again later." });
   }
 };
 
+const sendWelcomeEmail = async (email, username) => {
+  try {
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
 
-// User Login
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: "Welcome to [Your Website Name]",
+      html: `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to [Affiliate Website]</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #ffffff;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    h1 {
+      color: #333333;
+    }
+    p {
+      color: #555555;
+      line-height: 1.6;
+    }
+    .cta-button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #0066cc;
+      color: #ffffff;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+      margin: 20px 0;
+    }
+    .cta-button:hover {
+      background-color: #004c99;
+    }
+    .footer {
+      font-size: 0.9em;
+      color: #888888;
+      text-align: center;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid #eeeeee;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Welcome to [Affiliate Website]!</h1>
+    <p>Hi ${username},</p>
+    <p>We’re thrilled to have you join us! As a new affiliate with https://fathiabams-task.vercel.app/, you’re now part of a community dedicated to success and growth. We're here to support you in maximizing your earnings and achieving your goals.</p>
+    <p>Start exploring our platform and discover the tools and resources available to help you get the most out of your affiliate journey.</p>
+    <a href="[Affiliate_Link]" class="cta-button">Get Started Now</a>
+    <p>If you have any questions or need assistance, our support team is just an email away. We look forward to working with you!</p>
+    <p>Welcome aboard, and here’s to your success!</p>
+    <p>Best regards,<br>The profit plus Team</p>
+    <div class="footer">
+      © [Year] profit plus. All rights reserved.<br>
+      <a href="[https://fathiabams-task.vercel.app/" style="color: #0066cc;">Privacy Policy</a> | <a href="https://fathiabams-task.vercel.app/" style="color: #0066cc;">Terms of Service</a>
+    </div>
+  </div>
+</body>
+</html>
+`,
+    };
+
+    // Send the email
+    await transporter.sendMail(mailOptions);
+    console.log("Welcome email sent successfully");
+  } catch (error) {
+    console.error("Failed to send welcome email:", error);
+  }
+};
+
 const userlogin = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -65,10 +183,9 @@ const userlogin = async (req, res) => {
     res.status(200).json({ ...user._doc });
   } catch (error) {
     res.status(401).json({ message: error });
-    console.error(`error ${error}`)
+    console.error(`error ${error}`);
   }
 };
-
 
 const adminlogin = async (req, res) => {
   const { username, password } = req.body;
