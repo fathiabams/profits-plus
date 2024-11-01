@@ -4,6 +4,8 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../model/user");
 const Admin = require("../model/admin");
+const asynchandler = require('express-async-handler')
+const nodemailer = require('nodemailer')
 
 // const userregister = async (req, res) => {
 //   try {
@@ -38,15 +40,14 @@ const Admin = require("../model/admin");
 //   }
 // };
 
-const userregister = async (req, res) => {
+const userregister = asynchandler(async (req, res) => {
   try {
     const { username, email, password } = req.body;
-
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: "User already registered" });
     }
-
+    console.log(username, email, password)
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = new User({ username, email, password: hashedPassword });
@@ -70,7 +71,7 @@ const userregister = async (req, res) => {
       .status(500)
       .json({ message: "An error occurred. Please try again later." });
   }
-};
+});
 
 const sendWelcomeEmail = async (email, username) => {
   try {
