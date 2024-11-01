@@ -38,7 +38,7 @@ const Admin = require("../model/admin");
 //   }
 // };
 
-const userRegister = async (req, res) => {
+const userregister = async (req, res) => {
   try {
     const { username, email, password } = req.body;
 
