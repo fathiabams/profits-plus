@@ -30,7 +30,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/api/v1", require("./router/operations"));
 
-const port = 3000
+const port = process.env.PORT || 1234;
+console.log(port)
 // io.listen(1230, () => {
 //   console.log("Socket server started on port 8080");
 // });
