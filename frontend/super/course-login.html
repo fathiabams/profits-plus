@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Form</title>
+    <style>
+      /* Style the login form */
+      #login-form {
+        width: 300px;
+        margin: 50px auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      #login-form label {
+        display: block;
+        margin-bottom: 10px;
+      }
+
+      #login-form input[type="email"],
+      #login-form input[type="password"] {
+        width: 100%;
+        height: 40px;
+        margin-bottom: 20px;
+        padding: 10px;
+        border: 1px solid #ccc;
+      }
+
+      #login-form button[type="submit"] {
+        width: 100%;
+        height: 40px;
+        background-color: #4caf50;
+        color: #fff;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      #login-form button[type="submit"]:hover {
+        background-color: #3e8e41;
+      }
+
+      #forgot-password-link {
+        text-decoration: none;
+        color: #337ab7;
+      }
+
+      #forgot-password-link:hover {
+        color: #23527c;
+      }
+
+      /* Style the forgot password modal */
+      #forgot-password-modal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 300px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        background-color: #f9f9f9;
+        display: none;
+      }
+
+      #forgot-password-modal h2 {
+        margin-top: 0;
+      }
+
+      #forgot-password-form {
+        margin-top: 20px;
+      }
+
+      #cancel-forgot-password-link {
+        text-decoration: none;
+        color: #337ab7;
+      }
+
+      #cancel-forgot-password-link:hover {
+        color: #23527c;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Login Form -->
+    <form id="login-form">
+      <div class="form-group">
+        <label for="email">Email Address:</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="your@email.com"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="****"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <input type="checkbox" id="remember-me" name="remember-me" />
+        <label for="remember-me">Remember Me</label>
+      </div>
+
+      <button type="submit">Login</button>
+
+      <p>
+        <a href="#" id="forgot-password-link">Forgot Password?</a>
+      </p>
+    </form>
+
+    <!-- Forgot Password Modal -->
+    <div id="forgot-password-modal">
+      <h2>Forgot Password?</h2>
+      <p>Enter your email address to reset your password.</p>
+
+      <form id="forgot-password-form">
+        <div class="form-group">
+          <label for="forgot-email">Email Address:</label>
+          <input
+            type="email"
+            id="forgot-email"
+            name="email"
+            placeholder="your@email.com"
+            required
+          />
+        </div>
+
+        <button type="submit">Reset Password</button>
+      </form>
+
+      <p>
+        <a href="#" id="cancel-forgot-password-link">Cancel</a>
+      </p>
+    </div>
+
+    <script>
+      // Get the login form and forgot password link
+      const loginForm = document.getElementById("login-form");
+      const forgotPasswordLink = document.getElementById(
+        "forgot-password-link"
+      );
+      const forgotPasswordModal = document.getElementById(
+        "forgot-password-modal"
+      );
+      const cancelForgotPasswordLink = document.getElementById(
+        "cancel-forgot-password-link"
+      );
+
+      // Add event listener to login form submission
+      loginForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        // Handle login form submission
+        console.log("Login form submitted");
+      });
+
+      // Add event listener to forgot password link
+      forgotPasswordLink.addEventListener;
+    </script>
+  </body>
+</html>
