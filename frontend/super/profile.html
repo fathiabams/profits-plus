@@ -460,6 +460,7 @@
         </div>
     </div>
     <script>
+
         window.onload = function () {
             // Retrieve user data from localStorage
             const user = JSON.parse(localStorage.getItem('user'));
@@ -554,6 +555,14 @@
 
 
 
+
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+                document.querySelector(".navbar-toggler").addEventListener("click", function () {
+                    this.classList.toggle("toggled");
+                });
+            });
 
     </script>
 
