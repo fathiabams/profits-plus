@@ -8,59 +8,74 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f7f7f7;
+            background-color: #f4f5f7;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            text-align: center;
+            padding: 2rem;
+            background-color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #7A288A;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #666;
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
         }
 
         .button {
             background-color: #7A288A;
             color: #fff;
             border: none;
-            padding: 15px 30px;
-            font-size: 20px;
+            padding: 12px 24px;
+            font-size: 1rem;
             cursor: pointer;
-            border-radius: 2px;
-            margin: 20px;
-            width: 100 px;
-            height: 40px;
+            border-radius: 5px;
+            width: 100%;
+            max-width: 150px;
             font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
 
         .button:hover {
             background-color: #5c1a7d;
-        }
-
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 2em;
-        }
-
-        .course-info {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        h1 {
-            color: #333;
-        }
-
-        p {
-            color: #666;
+            transform: scale(1.05);
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <div class="course-info">
-            <h1>Course Overview</h1>
-            <p>Welcome to our comprehensive course!</p>
-            <p>This course is designed to equip you with the skills and knowledge necessary to succeed.</p>
-            <p>Learn from expert instructors with industry experience and gain practical skills.</p>
+        <h1>Course Overview</h1>
+        <p>Welcome to our comprehensive course! Gain the skills and knowledge needed to excel in your field, with
+            insights from expert instructors and hands-on experience.</p>
+        <div class="button-container">
+            <button class="button" onclick="login()">Login</button>
+            <button class="button" onclick="register()">Register</button>
         </div>
-        <button class="button" onclick="login()">Login</button>
-        <button class="button" onclick="register()">Register</button>
     </div>
     <script>
         function login() {
