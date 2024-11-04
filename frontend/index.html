@@ -600,6 +600,21 @@
           margin: 0px auto;
           display: block;
         }
+        .redirect-button {
+          padding: 10px 60px;
+          text-transform: capitalize;
+          background-color: white;
+          border: 1px solid #112111;
+          color: #112111;
+          font-size: 1.25em;
+          cursor: pointer;
+          transition: background-color 0.3s, color 0.3s;
+        }
+
+        .redirect-button:hover {
+          background-color: #112111;
+          color: white;
+        }
 
         #joo2 {
           display: block;
@@ -805,7 +820,7 @@
                   font-size: 16px;
                   padding-top: 20px;
                 "
-             href="https://promptearn.com.ng/blog/"
+                href="https://promptearn.com.ng/blog/"
                 >Blog</a
               >
             </li>
@@ -850,6 +865,22 @@
                 href="register2.html"
                 >Create Account</a
               >
+              <a
+                style="
+                  padding-left: 60px;
+                  padding-right: 60px;
+                  text-transform: capitalize;
+                  background-color: white;
+                  border: 1px solid #112111;
+                  color: #112111;
+                "
+                class="nav-link btn btn-success btn-lg"
+                href="./super/course-1.html"
+                >ABIC</a
+              >
+              <button class="redirect-button" onclick="redirectToCourse()">
+                ABIC
+              </button>
             </li>
           </ul>
           <!-- End Menu -->
@@ -2235,14 +2266,6 @@
           </div>
         </div>
       </section>
-
-      <!-- /.container -->
-      <!-- Before Footer
-    ================================================== -->
-
-      <!-- Begin Footer
-	
-    ================================================== -->
       <footer style="background-color: #052431" class="footer">
         <style>
           #myInput33::placeholder {
@@ -2526,12 +2549,16 @@
           }
         </script>
       </footer>
-      <!-- End Footer
-    ================================================== -->
     </div>
+    <script>
+      function redirectToCourse() {
+        // Define the URL for redirection
+        const url = "./super/course-1.html";
+        // Redirect to the specified URL
+        window.location.href = url;
+      }
+    </script>
 
-    <!-- JavaScript
-================================================== -->
     <script src="assets/js/jquery.min.js"></script>
     <script
       src="../cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
