@@ -1,251 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login Form</title>
-    <style>
-      /* Basic Reset */
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: Arial, sans-serif;
-      }
 
-      /* Body Styling */
-      body {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        background: linear-gradient(135deg, #4c9ff0, #1a73e8);
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login Form</title>
+  <style>
+    /* Basic Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
 
-      /* Login Form Styling */
-      #login-form {
-        width: 350px;
-        padding: 30px;
-        border-radius: 15px;
-        background: #fff;
-        box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
-        transition: transform 0.3s;
-      }
+    /* Body Styling */
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #4c9ff0, #1a73e8);
+    }
 
-      #login-form:hover {
-        transform: scale(1.05);
-      }
+    /* Login Form Styling */
+    #login-form {
+      width: 350px;
+      padding: 30px;
+      border-radius: 15px;
+      background: #fff;
+      box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s;
+    }
 
-      #login-form h2 {
-        margin-bottom: 20px;
-        color: #333;
-        text-align: center;
-      }
+    #login-form:hover {
+      transform: scale(1.05);
+    }
 
-      #login-form label {
-        font-size: 14px;
-        color: #666;
-        display: block;
-        margin-bottom: 5px;
-      }
+    #login-form h2 {
+      margin-bottom: 20px;
+      color: #333;
+      text-align: center;
+    }
 
-      #login-form input[type="email"],
-      #login-form input[type="password"] {
-        width: 100%;
-        padding: 12px;
-        margin-bottom: 20px;
-        border-radius: 8px;
-        border: 1px solid #ddd;
-        background-color: #f9f9f9;
-        transition: border-color 0.3s;
-      }
+    #login-form label {
+      font-size: 14px;
+      color: #666;
+      display: block;
+      margin-bottom: 5px;
+    }
 
-      #login-form input[type="email"]:focus,
-      #login-form input[type="password"]:focus {
-        border-color: #1a73e8;
-        outline: none;
-      }
+    #login-form input[type="email"],
+    #login-form input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      background-color: #f9f9f9;
+      transition: border-color 0.3s;
+    }
 
-      #login-form button[type="submit"] {
-        width: 100%;
-        padding: 12px;
-        border: none;
-        border-radius: 8px;
-        background-color: #1a73e8;
-        color: #fff;
-        font-size: 16px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: background-color 0.3s, box-shadow 0.3s;
-      }
+    #login-form input[type="email"]:focus,
+    #login-form input[type="password"]:focus {
+      border-color: #1a73e8;
+      outline: none;
+    }
 
-      #login-form button[type="submit"]:hover {
-        background-color: #005cbf;
-        box-shadow: 0px 4px 10px rgba(0, 92, 191, 0.3);
-      }
+    #login-form button[type="submit"] {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background-color: #1a73e8;
+      color: #fff;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s, box-shadow 0.3s;
+    }
 
-      #login-form .form-group {
-        margin-bottom: 20px;
-      }
+    #login-form button[type="submit"]:hover {
+      background-color: #005cbf;
+      box-shadow: 0px 4px 10px rgba(0, 92, 191, 0.3);
+    }
 
-      #login-form p {
-        text-align: center;
-        margin-top: 10px;
-      }
+    #login-form .form-group {
+      margin-bottom: 20px;
+    }
 
-      #forgot-password-link {
-        color: #1a73e8;
-        text-decoration: none;
-        font-size: 14px;
-      }
+    #login-form p {
+      text-align: center;
+      margin-top: 10px;
+    }
 
-      #forgot-password-link:hover {
-        text-decoration: underline;
-      }
+    #forgot-password-link {
+      color: #1a73e8;
+      text-decoration: none;
+      font-size: 14px;
+    }
 
-      /* Forgot Password Modal Styling */
-      #forgot-password-modal {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 350px;
-        padding: 30px;
-        border-radius: 15px;
-        background: #fff;
-        box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
-        display: none;
-      }
+    #forgot-password-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
 
-      #forgot-password-modal h2 {
-        color: #333;
-        text-align: center;
-        margin-bottom: 20px;
-      }
-
-      #forgot-password-modal p {
-        text-align: center;
-        color: #666;
-        margin-bottom: 20px;
-      }
-
-      #forgot-password-modal button[type="submit"] {
-        width: 100%;
-        padding: 12px;
-        border: none;
-        border-radius: 8px;
-        background-color: #1a73e8;
-        color: #fff;
-        font-size: 16px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: background-color 0.3s;
-      }
-
-      #forgot-password-modal button[type="submit"]:hover {
-        background-color: #005cbf;
-      }
-
-      #cancel-forgot-password-link {
-        display: block;
-        text-align: center;
-        margin-top: 15px;
-        color: #1a73e8;
-        text-decoration: none;
-        font-size: 14px;
-      }
-
-      #cancel-forgot-password-link:hover {
-        text-decoration: underline;
-      }
-    </style>
-  </head>
-
-  <body>
-    <!-- Login Form -->
-    <form id="login-form">
-      <h2>Login</h2>
-      <div class="form-group">
-        <label for="email">Email Address:</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          placeholder="your@email.com"
-          required
-        />
-      </div>
-
-      <div class="form-group">
-        <label for="password">Password:</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          placeholder="••••••••"
-          required
-        />
-      </div>
-
-      <div class="form-group">
-        <input type="checkbox" id="remember-me" name="remember-me" />
-        <label for="remember-me">Remember Me</label>
-      </div>
-
-      <button type="submit">Login</button>
-
-      <p>
-        <a href="#" id="forgot-password-link">Forgot Password?</a>
-      </p>
-    </form>
-
-    <!-- Forgot Password Modal -->
-    <div id="forgot-password-modal">
-      <h2>Forgot Password?</h2>
-      <p>Enter your email address to reset your password.</p>
-
-      <form id="forgot-password-form">
-        <div class="form-group">
-          <label for="forgot-email">Email Address:</label>
-          <input
-            type="email"
-            id="forgot-email"
-            name="email"
-            placeholder="your@email.com"
-            required
-          />
-        </div>
-
-        <button type="submit">Reset Password</button>
-      </form>
-
-      <p>
-        <a href="#" id="cancel-forgot-password-link">Cancel</a>
-      </p>
+<body>
+  <!-- Login Form -->
+  <form id="login-form">
+    <h2>Login</h2>
+    <div class="form-group">
+      <label for="email">Email Address:</label>
+      <input type="email" id="email" name="email" placeholder="your@email.com" required />
     </div>
 
-    <script>
-      const forgotPasswordLink = document.getElementById(
-        "forgot-password-link"
-      );
-      const forgotPasswordModal = document.getElementById(
-        "forgot-password-modal"
-      );
-      const cancelForgotPasswordLink = document.getElementById(
-        "cancel-forgot-password-link"
-      );
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" placeholder="••••••••" required />
+    </div>
 
-      // Show forgot password modal
-      forgotPasswordLink.addEventListener("click", (e) => {
-        e.preventDefault();
-        forgotPasswordModal.style.display = "block";
-      });
+    <button type="submit">Login</button>
+  </form>
 
-      // Hide forgot password modal
-      cancelForgotPasswordLink.addEventListener("click", (e) => {
-        e.preventDefault();
-        forgotPasswordModal.style.display = "none";
-      });
-    </script>
-  </body>
+  <!-- Include Axios from CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    // Handle form submission
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Collect form data
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      // URL-encode data
+      const data = new URLSearchParams();
+      data.append('email', email);
+      data.append('password', password);
+
+      try {
+        // Make the Axios POST request
+        const response = await axios.post('https://fathiabams-task.onrender.com/api/v1/course-login', data, {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }
+        });
+
+        // Handle success response
+        console.log('Response:', response.data);
+      } catch (error) {
+        // Handle error response
+        console.error('Error:', error);
+      }
+    });
+  </script>
+</body>
+
 </html>

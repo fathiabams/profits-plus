@@ -22,7 +22,11 @@ const {
 } = require("../controllers/affiliate");
 const { coursesales } = require("../controllers/sales");
 const { commissionsales } = require("../controllers/commisionsales");
-const { registerAndPay } = require("../controllers/coursepayment");
+const {
+  registerAndPay,
+  paymentcallback,
+  courselogin,
+} = require("../controllers/coursepayment");
 const Router = express.Router();
 
 Router.route("/admin/login").post(protect, adminlogin);
@@ -51,5 +55,7 @@ Router.route("/sales").post(commissionsales);
 Router.route("/reset-password").post(resetpassword);
 Router.route("/verify-email").post(verifyemail);
 Router.route("/register-and-pay").post(registerAndPay);
+Router.route("/payment-callback").get(paymentcallback);
+Router.route('/course-login').post(courselogin)
 
 module.exports = Router;

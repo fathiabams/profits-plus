@@ -23,7 +23,7 @@ const initializePayment = async (email, amount, reference, callbackUrl) => {
         if (response.data.status) {
             return response.data.data;
         } else {
-            throw new Error(response.data.message || 'Failed to initialize payment');
+            throw new Error(response.data || 'Failed to initialize payment');
         }
     } catch (error) {
         console.error('Error initializing payment:', error.message);
