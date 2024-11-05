@@ -1,181 +1,226 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Register Form</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f2f5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            color: #333;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f2f5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        color: #333;
+      }
 
-        #register-form {
-            width: 100%;
-            max-width: 400px;
-            padding: 2rem;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
+      #register-form {
+        width: 100%;
+        max-width: 400px;
+        padding: 2rem;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
 
-        #register-form h2 {
-            margin-bottom: 1rem;
-            color: #7A288A;
-            font-size: 1.8rem;
-        }
+      #register-form h2 {
+        margin-bottom: 1rem;
+        color: #7a288a;
+        font-size: 1.8rem;
+      }
 
-        .form-group {
-            margin-bottom: 1.5rem;
-            text-align: left;
-        }
+      .form-group {
+        margin-bottom: 1.5rem;
+        text-align: left;
+      }
 
-        #register-form label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: #555;
-        }
+      #register-form label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: #555;
+      }
 
-        #register-form input[type="text"],
-        #register-form input[type="email"],
-        #register-form input[type="password"],
-        #register-form select {
-            width: 100%;
-            padding: 10px;
-            font-size: 1rem;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-sizing: border-box;
-            transition: border-color 0.3s;
-        }
+      #register-form input[type="text"],
+      #register-form input[type="email"],
+      #register-form input[type="password"],
+      #register-form select {
+        width: 100%;
+        padding: 10px;
+        font-size: 1rem;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-sizing: border-box;
+        transition: border-color 0.3s;
+      }
 
-        #register-form input[type="text"]:focus,
-        #register-form input[type="email"]:focus,
-        #register-form input[type="password"]:focus,
-        #register-form select:focus {
-            border-color: #7A288A;
-            outline: none;
-        }
+      #register-form input[type="text"]:focus,
+      #register-form input[type="email"]:focus,
+      #register-form input[type="password"]:focus,
+      #register-form select:focus {
+        border-color: #7a288a;
+        outline: none;
+      }
 
-        #register-form button[type="submit"] {
-            width: 100%;
-            padding: 12px;
-            background-color: #7A288A;
-            color: #fff;
-            font-size: 1rem;
-            font-weight: bold;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
-        }
+      #register-form button[type="submit"] {
+        width: 100%;
+        padding: 12px;
+        background-color: #7a288a;
+        color: #fff;
+        font-size: 1rem;
+        font-weight: bold;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s;
+      }
 
-        #register-form button[type="submit"]:hover {
-            background-color: #5c1a7d;
-            transform: scale(1.03);
-        }
+      #register-form button[type="submit"]:hover {
+        background-color: #5c1a7d;
+        transform: scale(1.03);
+      }
 
-        #register-form p {
-            margin-top: 1rem;
-            font-size: 0.9rem;
-        }
+      #register-form p {
+        margin-top: 1rem;
+        font-size: 0.9rem;
+      }
 
-        #register-form a {
-            color: #7A288A;
-            text-decoration: none;
-            font-weight: 600;
-        }
+      #register-form a {
+        color: #7a288a;
+        text-decoration: none;
+        font-weight: 600;
+      }
 
-        #register-form a:hover {
-            text-decoration: underline;
-        }
+      #register-form a:hover {
+        text-decoration: underline;
+      }
 
-        .terms-container {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.9rem;
-            color: #666;
-        }
+      .terms-container {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.9rem;
+        color: #666;
+      }
 
-        .terms-container input[type="checkbox"] {
-            transform: scale(1.2);
-        }
+      .terms-container input[type="checkbox"] {
+        transform: scale(1.2);
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <!-- Register Form -->
     <form id="register-form">
-        <h2>Register</h2>
+      <h2>Register</h2>
 
-        <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name" placeholder="John Doe" required>
-        </div>
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          placeholder="John Doe"
+          required
+        />
+      </div>
 
-        <div class="form-group">
-            <label for="email">Email Address</label>
-            <input type="email" id="email" name="email" placeholder="your@email.com" required>
-        </div>
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="your@email.com"
+          required
+        />
+      </div>
 
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" placeholder="****" required>
-        </div>
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input
+          type="text"
+          id="phone"
+          name="phone"
+          placeholder="1234567890"
+          required
+        />
+      </div>
 
-        <div class="form-group">
-            <label for="country">Country</label>
-            <select id="country" name="country" required>
-                <option value="">Select Country</option>
-                <option value="Algeria">Algeria</option>
-                <option value="Angola">Angola</option>
-                <!-- Other countries omitted for brevity -->
-                <option value="Nigeria">Nigeria</option>
-                <option value="South Africa">South Africa</option>
-                <option value="Uganda">Uganda</option>
-            </select>
-        </div>
+      <div class="form-group">
+        <label for="country">Country</label>
+        <select id="country" name="country" required>
+          <option value="">Select Country</option>
+          <option value="Algeria">Algeria</option>
+          <option value="Angola">Angola</option>
+          <option value="Nigeria">Nigeria</option>
+          <option value="South Africa">South Africa</option>
+          <option value="Uganda">Uganda</option>
+        </select>
+      </div>
 
-        <div class="form-group">
-            <label for="payment-method">Mode of Payment</label>
-            <select id="payment-method" name="payment-method" required>
-                <option value="">Select Payment Method</option>
-                <option value="Moniepoint">Moniepoint</option>
-            </select>
-        </div>
+      <!-- <div class="form-group">
+        <label for="payment-method">Mode of Payment</label>
+        <select id="payment-method" name="payment-method" required>
+          <option value="">Select Payment Method</option>
+          <option value="Moniepoint">Moniepoint</option>
+        </select> -->
+      </div>
 
-        <div class="form-group terms-container">
-            <input type="checkbox" id="terms-and-conditions" name="terms-and-conditions" required>
-            <label for="terms-and-conditions">
-                I agree to the <a href="#" target="_blank">Terms and Conditions</a>
-            </label>
-        </div>
+      <div class="form-group terms-container">
+        <input
+          type="checkbox"
+          id="terms-and-conditions"
+          name="terms-and-conditions"
+          required
+        />
+        <label for="terms-and-conditions">
+          I agree to the <a href="#" target="_blank">Terms and Conditions</a>
+        </label>
+      </div>
 
-        <button type="submit">Register</button>
+      <button type="submit">Register and Pay</button>
 
-        <p>
-            Already have an account? <a href="#" id="already-have-account-link">Login</a>
-        </p>
+      <p>
+        Already have an account?
+        <a href="#" id="already-have-account-link">Login</a>
+      </p>
     </form>
 
     <script>
-        const registerForm = document.getElementById('register-form');
+      const registerForm = document.getElementById("register-form");
 
-        registerForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            console.log('Register form submitted');
-        });
+      registerForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(registerForm);
+        const data = Object.fromEntries(formData.entries());
+
+        try {
+          const response = await fetch("/api/register-and-pay", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          });
+
+          const result = await response.json();
+          if (result.success) {
+            window.location.href = result.authorizationUrl; // Redirect to Paystack
+          } else {
+            alert(result.message);
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          alert(
+            "An error occurred while processing your request. Please try again."
+          );
+        }
+      });
     </script>
-</body>
-
+  </body>
 </html>
