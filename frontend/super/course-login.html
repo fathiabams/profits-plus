@@ -125,36 +125,42 @@
 
   <!-- Include Axios from CDN -->
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script>
-    // Handle form submission
-    document.getElementById('login-form').addEventListener('submit', async (e) => {
-      e.preventDefault();
+<script>
+  // Handle form submission
+  document.getElementById('login-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-      // Collect form data
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
+    // Collect form data
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
 
-      // URL-encode data
-      const data = new URLSearchParams();
-      data.append('email', email);
-      data.append('password', password);
+    // URL-encode data
+    const data = new URLSearchParams();
+    data.append('email', email);
+    data.append('password', password);
 
-      try {
-        // Make the Axios POST request
-        const response = await axios.post('https://fathiabams-task.onrender.com/api/v1/course-login', data, {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-          }
-        });
+    try {
+      // Make the Axios POST request
+      const response = await axios.post('https://fathiabams-task.onrender.com/api/v1/course-login', data, {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      });
 
-        // Handle success response
-        console.log('Response:', response.data);
-      } catch (error) {
-        // Handle error response
-        console.error('Error:', error);
+      // Store response in localStorage and redirect
+      if (response.data.success) {
+        localStorage.setItem('user', JSON.stringify(response.data.user)); // store user data
+        window.location.href = 'lecture.html'; // redirect to the lecture page
+      } else {
+        alert(response.data.message || 'Login failed. Please try again.');
       }
-    });
-  </script>
+    } catch (error) {
+      console.error('Error:', error);
+      alert('An error occurred. Please check your credentials or try again later.');
+    }
+  });
+</script>
+
 </body>
 
 </html>
