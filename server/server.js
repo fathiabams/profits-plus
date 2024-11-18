@@ -29,6 +29,9 @@ connectDB();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/api/v1", require("./router/operations"));
+app.get("/", (req, res) => {
+    res.send("welcome to the default route, if you get this message then it means you have probably set it u, doesnt mean you wont further experience challenge, it just simply means the backend api is up and workinf");
+});
 
 const port = 1234;
 // io.listen(1230, () => {
