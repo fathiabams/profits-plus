@@ -146,15 +146,15 @@ const sendWelcomeEmail = async (email, username) => {
   <div class="container">
     <h1>Welcome to PROFIT PLUS!</h1>
     <p>Hi ${username},</p>
-    <p>We’re thrilled to have you join us! As a new affiliate with https://fathiabams-task.vercel.app/, you’re now part of a community dedicated to success and growth. We're here to support you in maximizing your earnings and achieving your goals.</p>
+    <p>We’re thrilled to have you join us! As a new affiliate with https://www.theprofitplus.com.ng/, you’re now part of a community dedicated to success and growth. We're here to support you in maximizing your earnings and achieving your goals.</p>
     <p>Start exploring our platform and discover the tools and resources available to help you get the most out of your affiliate journey.</p>
-    <a href="https://fathiabams-task.vercel.app/" class="cta-button">Get Started Now</a>
+    <a href="https://www.theprofitplus.com.ng/" class="cta-button">Get Started Now</a>
     <p>If you have any questions or need assistance, our support team is just an email away. We look forward to working with you!</p>
     <p>Welcome aboard, and here’s to your success!</p>
     <p>Best regards,<br>The profit plus Team</p>
     <div class="footer">
       © [Year] profit plus. All rights reserved.<br>
-      <a href="https://fathiabams-task.vercel.app/" style="color: #0066cc;">Privacy Policy</a> | <a href="https://fathiabams-task.vercel.app/" style="color: #0066cc;">Terms of Service</a>
+      <a href="https://www.theprofitplus.com.ng//" style="color: #0066cc;">Privacy Policy</a> | <a href="https://www.theprofitplus.com.ng/" style="color: #0066cc;">Terms of Service</a>
     </div>
   </div>
 </body>

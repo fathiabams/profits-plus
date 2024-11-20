@@ -13,7 +13,7 @@ const registerAndPay = async (req, res) => {
 
     const reference = `REF-${Date.now()}`;
   
-    const callbackUrl = "https://fathiabams-task.onrender.com/api/v1/payment-callback";
+    const callbackUrl = "https://profitplusbackend.com.ng/api/v1/payment-callback";
 
     try {
         let user = await User.findOne({ email });
@@ -87,7 +87,7 @@ const paymentcallback = async (req, res) => {
 
                 await Payment.updateOne({ reference }, { status: "sucessful" });;
 
-                return res.redirect("https://www.profitsplus115.com.ng/frontend/super/sucess.html"); // Adjust the redirect URL as needed
+                return res.redirect("https://www.theprofitplus.com.ng/frontend/super/sucess.html"); // Adjust the redirect URL as needed
             } else {
                 await Payment.updateOne({ reference }, { status: "failed" });
 

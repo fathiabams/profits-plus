@@ -6,6 +6,7 @@ const allowedOrigin = [
     "https://127.0.0.1:5502/frontend/",
     "https://fathiabams-task.vercel.app",
     "https://www.profitsplus115.com.ng",
-    "http://www.profitsplus115.com.ng"
+    "http://www.profitsplus115.com.ng",
+    "https://www.theprofitplus.com.ng"
 ];
 module.exports = allowedOrigin;
