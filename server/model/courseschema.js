@@ -8,6 +8,7 @@ const courseSchema = new mongoose.Schema({
     phone: { type: String, required: true },
     password: { type: String, required: true },
     courseid: {
+        type: String,
         required: true,
     },
 });
