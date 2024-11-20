@@ -8,8 +8,6 @@ const courseSchema = new mongoose.Schema({
     phone: { type: String, required: true },
     password: { type: String, required: true },
     courseid: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Course", // Reference to the User model
         required: true,
     },
 });
