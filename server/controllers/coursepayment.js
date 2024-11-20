@@ -8,7 +8,8 @@ const nodemailer = require('nodemailer')
 const jwt = require("jsonwebtoken")
 const courseuser= require('../model/courseschema.js')
 const registerAndPay = async (req, res) => {
-    const { name, email, phone, password, courseid ,amount} = req.body;
+    const amount =400000
+    const { name, email, phone, password, courseid} = req.body;
     console.log(name);
 
     const reference = `REF-${Date.now()}`;
