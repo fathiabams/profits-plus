@@ -9,7 +9,7 @@ const commissionsales = async (req, res) => {
   const commission = await Commission.findOne({ courseId });
 
   // Calculate commission
-  const commissionAmount = salesCount * course.price * commission.rate;
+  const commissionAmount = salesCount * course.price * 0.4;
 
   // Update user's sales statistics
   user.todaySales += salesCount;
