@@ -12,7 +12,7 @@ const coursesales = async (req, res) => {
     <h1>Congratulations on Your Sales!</h1>
     <p>You've successfully made ${salesCount} sales!</p>
     <p>Course Title: ${course.title}</p>
-    <p>Total Earnings: ${salesCount * course.price}</p>
+    <p>Total Earnings: ${salesCount * commissionAmount}</p>
   `;
 
     sendEmail(user.email, 'Congratulations on Your Sales!', emailHtml);
