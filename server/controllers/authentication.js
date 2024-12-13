@@ -63,7 +63,7 @@ const userregister = asyncHandler(async (req, res) => {
       res
         .header("Authorization", `Bearer ${token}`)
         .status(200)
-        .json({ ...user._doc, password: undefined });
+        .json({message: "Registration Successful"})
 
       await sendWelcomeEmail(email, username);
     } else {
