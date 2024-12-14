@@ -1,9 +1,5 @@
+const express = require("express");
 const { protect } = require("../middleware/authMiddleware");
-const { userdash } = require("../controllers/dashboard");
-const { admindashboard } = require("../controllers/adminDashBoard");
-const { payments } = require("../controllers/paymentConfirmation");
-const { withdrawal } = require("../controllers/withdrawal");
-const realtimeSales = require("../controllers/realtimesales");
 const {
   adminlogin,
   resetpassword,
@@ -13,8 +9,12 @@ const {
   createCourse,
   getUserCourses,
 } = require("../controllers/authentication");
-
-const express = require("express");
+const { userdash } = require("../controllers/dashboard");
+const { admindashboard } = require("../controllers/adminDashBoard");
+const { payments } = require("../controllers/paymentConfirmation");
+const { withdrawal } = require("../controllers/withdrawal");
+const { coursesales } = require("../controllers/sales");
+const { commissionsales } = require("../controllers/commisionsales");
 const {
   affiliatereferrals,
   generateaffiliatelink,
@@ -22,44 +22,47 @@ const {
   affiliatedlinks,
   affiliatesalesmetrics,
 } = require("../controllers/affiliate");
-const { coursesales } = require("../controllers/sales");
-const { commissionsales } = require("../controllers/commisionsales");
 const {
   registerAndPay,
   paymentcallback,
   courselogin,
 } = require("../controllers/coursepayment");
-const Router = express.Router();
 
-Router.route("/admin/login").post(protect, adminlogin);
-Router.route("/userlogin").post(userlogin);
-Router.route("/register").post(userregister);
-Router.route("/admindash").get(protect, admindashboard);
-Router.route("/userdash").get(protect, userdash);
-Router.route("/payments").get(payments);
-Router.route("/withdrawals").post(protect, withdrawal);
-Router.route("/api/affiliate/:courseId/:affiliateId").get(
-  protect,
-  affiliatereferrals
-);
-Router.route("/api/generate-affiliate-link/:courseId").post(
-  protect,
-  generateaffiliatelink
-);
-Router.route("/api/sale").post(protect, affiliatesales);
-Router.route("/api/affiliate-links/:affiliateId").get(protect, affiliatedlinks);
-Router.route("/api/affiliate-sales/:affiliateId").get(
-  protect,
-  affiliatesalesmetrics
-);
-Router.route("/api/realtimesales").get(coursesales);
-Router.route("/sales").post(commissionsales);
-Router.route("/reset-password").post(resetpassword);
-Router.route("/verify-email").post(verifyemail);
-Router.route("/register-and-pay").post(registerAndPay);
-Router.route("/payment-callback").get(paymentcallback);
-Router.route('/course-login').post(courselogin)
-Router.route('/create-course').post(protect, createCourse)
-Router.route('/get-all-user-courses').get(protect, getUserCourses)
+const appRouter = express.Router();
 
-module.exports = Router;
+// Authentication Routes
+appRouter.route("/api/admin/login").post(protect, adminlogin);
+appRouter.route("/api/user/login").post(userlogin);
+appRouter.route("/api/register").post(userregister);
+appRouter.route("/api/reset-password").post(resetpassword);
+appRouter.route("/api/verify-email").post(verifyemail);
+
+// Dashboard Routes
+appRouter.route("/api/admindash").get(protect, admindashboard);
+appRouter.route("/api/userdash").get(protect, userdash);
+
+// Payment and Withdrawal Routes
+appRouter.route("/api/payments").get(protect, payments);
+appRouter.route("/api/withdrawals").post(protect, withdrawal);
+
+// Affiliate Routes
+appRouter.route("/api/affiliate/:courseId/:affiliateId").get(protect, affiliatereferrals);
+appRouter.route("/api/generate-affiliate-link/:courseId").post(protect, generateaffiliatelink);
+appRouter.route("/api/sale").post(protect, affiliatesales);
+appRouter.route("/api/affiliate-links/:affiliateId").get(protect, affiliatedlinks);
+appRouter.route("/api/affiliate-sales/:affiliateId").get(protect, affiliatesalesmetrics);
+
+// Course Routes
+appRouter.route("/api/realtimesales").get(coursesales);
+appRouter.route("/api/course-login").post(courselogin);
+appRouter.route("/api/create-course").post(protect, createCourse);
+appRouter.route("/api/get-all-user-courses").get(protect, getUserCourses);
+
+// Sales Routes
+appRouter.route("/api/sales").post(protect, commissionsales);
+
+// Course Payment Routes
+appRouter.route("/api/register-and-pay").post(registerAndPay);
+appRouter.route("/api/payment-callback").get(paymentcallback);
+
+module.exports = appRouter;

@@ -45,6 +45,7 @@ const Course = require("../model/course");
 const userregister = asyncHandler(async (req, res) => {
   try {
     const { username, email, password } = req.body;
+    console.log(username, email, password)
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: "User already registered" });
