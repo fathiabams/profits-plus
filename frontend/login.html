@@ -117,9 +117,12 @@
 
       let password = document.querySelector('input[name="password"]').value;
       Toastify({
-        text:"Tis a toast", 
+
+        text: "This is a toast",
+
         duration: 3000
-      })
+
+      }).showToast();
       if (!email || !password) {
         alert("Please fill in both email and password");
         return;
@@ -127,17 +130,29 @@
 
       // Use Axios to send login request
       axios
-        .post("https://profitplusbackend.com.ng/api/v1/userlogin", {
+        .post("https://profitplusbackend.com.ng/api/v1/user/login", {
           email: email,
           password: password,
         })
         .then(function (response) {
           // Store the user data (e.g., token or user info) in localStorage
+          if (response.status === 200) {
+            Toastify({
+              text: "User signed in successfully",
+              duration: 3000
+            }).showToast();
           var userData = response.data;
+          console.log(userData)
           localStorage.setItem("user", JSON.stringify(userData));
+          window.location.href = "./super/index.html";
+          } 
+          if(response.status === 400) {
+            
+          }
+          
 
           // Redirect to index.html
-          window.location.href = "./super/index.html";
+        
         })
         .catch(function (error) {
           console.log(error)
