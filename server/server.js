@@ -15,19 +15,11 @@ const app = express();
 const connectDB = require("./config/db");
 const appRouter = require("./router/operations");
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  next();
-});
-app.use(cors(corsOption));
+
+app.use(cors());
 connectDB();
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 // app.use("/api/v1", require("./router/operations"));
 app.use(appRouter)
 app.get("/", (req, res) => {
