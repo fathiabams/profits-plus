@@ -116,38 +116,42 @@
       let email = document.querySelector('input[name="email"]').value;
 
       let password = document.querySelector('input[name="password"]').value;
-      Toastify({
-
-        text: "This is a toast",
-
-        duration: 3000
-
-      }).showToast();
+      
       if (!email || !password) {
-        alert("Please fill in both email and password");
+        Toastify({
+              text: "Please fill in both email and password",
+              duration: 3000,
+              backgroundColor: "red"
+            }).showToast();
         return;
       }
 
       // Use Axios to send login request
       axios
-        .post("https://profitplusbackend.com.ng/api/v1/user/login", {
+        .post("http://localhost:3000/api/user/login", {
           email: email,
           password: password,
         })
         .then(function (response) {
+          console.log(response)
           // Store the user data (e.g., token or user info) in localStorage
           if (response.status === 200) {
             Toastify({
               text: "User signed in successfully",
-              duration: 3000
+              duration: 3000,
+              backgroundColor: "green"
             }).showToast();
           var userData = response.data;
           console.log(userData)
           localStorage.setItem("user", JSON.stringify(userData));
           window.location.href = "./super/index.html";
           } 
-          if(response.status === 400) {
-            
+         else {
+            Toastify({
+              text: response.response.data,
+              duration: 3000,
+              backgroundColor: "red"
+            }).showToast();
           }
           
 
@@ -156,7 +160,11 @@
         })
         .catch(function (error) {
           console.log(error)
-          alert("Login failed: " + error.response);
+          Toastify({
+              text: "Server error",
+              duration: 3000,
+              backgroundColor: "red"
+            }).showToast();
         });
     }
   </script>
