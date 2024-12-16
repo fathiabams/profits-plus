@@ -42,7 +42,7 @@ const Course = require("../model/course");
 //   }
 // };
 
-const userregister = asyncHandler(async (req, res) => {
+const userRegister = asyncHandler(async (req, res) => {
   try {
     const { username, email, password } = req.body;
     console.log(username, email, password)
