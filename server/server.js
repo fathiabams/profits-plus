@@ -26,7 +26,7 @@ app.get("/", (req, res) => {
     res.send("welcome to the default route, if you get this message then it means you have probably set it u, doesnt mean you wont further experience challenge, it just simply means the backend api is up and workinf");
 });
 
-const PORT = 3000;
+const PORT = 3000 || process.env.PORT;
 // io.listen(1230, () => {
 //   console.log("Socket server started on port 8080");
 // });
