@@ -122,7 +122,7 @@ async function handleLogin(event) {
       duration: 3000,
       backgroundColor: "red",
     }).showToast();
-    return;
+    
   }
 
   try {
@@ -151,8 +151,10 @@ async function handleLogin(event) {
       backgroundColor: "green",
     }).showToast();
 
-    // Redirect to index.html
-    window.location.href = "./super/index.html";
+    setTimeout(() => {
+      window.location.href = "./super/index.html";
+    }, 6000)
+  
   } catch (error) {
     console.error("Error:", error.message);
 
