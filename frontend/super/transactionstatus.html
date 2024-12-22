@@ -283,47 +283,68 @@
         </div>
       </nav>
       <!-- End Navbar -->
-
-      <div class="content">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-12">
-              <div class="card">
-
-                <div class="card-header card-header-success">
-                  <h4 class="card-title">Check transaction</h4>
-                </div>
-                <div class="card-body">
-                  <form method="GET" action="checktran2.php" enctype="multipart/form-data">
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group bmd-form-group">
-                          <label class="bmd-label-floating">Type Buyer Email</label>
-                          <input name="email" type="email" class="form-control">
-                        </div>
-                      </div>
-
-
-
-
-
-                    </div>
-                    <hr>
-                    <button name="submit" type="submit" class="btn btn-success pull-right">Check</button>
-                    <div class="clearfix"></div>
-                  </form>
+<div class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-success">
+            <h4 class="card-title">Check transaction</h4>
+          </div>
+          <div class="card-body">
+            <!-- Updated form element -->
+            <form id="transaction-form" enctype="multipart/form-data">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group bmd-form-group">
+                    <label class="bmd-label-floating">Type Buyer Email</label>
+                    <input name="email" type="email" class="form-control" required>
+                  </div>
                 </div>
               </div>
-            </div>
-
+              <hr>
+              <button type="submit" class="btn btn-success pull-right">Check</button>
+              <div class="clearfix"></div>
+            </form>
+            <!-- Placeholder for displaying response -->
+            <div id="response-message" style="margin-top: 20px;"></div>
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</div>
 
-      <div style="clear:both"></div>
+<script>
+  document.getElementById('transaction-form').addEventListener('submit', async function(event) {
+    event.preventDefault(); // Prevent default form submission
+
+    const form = event.target;
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch('checktran2.php', {
+        method: 'POST', // Use 'POST' if your server expects POST requests
+        body: formData
+      });
+
+      if (!response.ok) {
+        throw new Error(`Server error: ${response.status}`);
+      }
+
+      const result = await response.text(); // Adjust based on expected response format
+      document.getElementById('response-message').innerHTML = result;
+    } catch (error) {
+      console.error('Error:', error);
+      document.getElementById('response-message').innerHTML = 'An error occurred. Please try again.';
+    }
+  });
+</script>
+<div style="clear:both"></div>
       <p style="text-align:center; padding:10px;"><b> For Support: Send a mail to <a
-            href="mailto:help@promptearn.com">help@promptearn.com</a></b></p>
-
+            href="mailto:help@promptearn.com">help@promptearn.com</a></b></p
+                                                                           
+      
       <footer class="footer">
         <div class="container-fluid">
           <div class="copyright float-right">
