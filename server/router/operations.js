@@ -27,7 +27,7 @@ const {
   paymentcallback,
   courselogin,
 } = require("../controllers/coursepayment");
-const { checkTransactionStatusByEmail } = require("../controllers/transactionController");
+const { checkTransactionStatusByEmail } = require("../controllers/transactionstatus");
 const { logout } = require("../controllers/logout");
 
 const appRouter = express.Router();
