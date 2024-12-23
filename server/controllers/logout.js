@@ -1,3 +1,5 @@
+const asyncHandler = require("express-async-handler");
+
 const logout = asyncHandler(async (req, res) => {
   try {
     // Send a success response for logout
@@ -13,3 +15,7 @@ const logout = asyncHandler(async (req, res) => {
     });
   }
 });
+
+module.exports = {
+  logout,
+};
