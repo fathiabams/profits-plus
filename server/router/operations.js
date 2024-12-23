@@ -27,6 +27,7 @@ const {
   paymentcallback,
   courselogin,
 } = require("../controllers/coursepayment");
+const { checkTransactionStatusByEmail } = require("../controllers/transactionController");
 
 const appRouter = express.Router();
 
@@ -64,5 +65,8 @@ appRouter.route("/api/sales").post(protect, commissionsales);
 // Course Payment Routes
 appRouter.route("/api/register-and-pay").post(registerAndPay);
 appRouter.route("/api/payment-callback").get(paymentcallback);
+
+// Transaction Status Route
+appRouter.route("/api/transaction-status/:email").get(protect, checkTransactionStatusByEmail);
 
 module.exports = appRouter;
