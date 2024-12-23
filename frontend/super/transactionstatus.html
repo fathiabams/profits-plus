@@ -314,31 +314,41 @@
     </div>
   </div>
 </div>
-
 <script>
-  document.getElementById('transaction-form').addEventListener('submit', async function(event) {
-    event.preventDefault(); // Prevent default form submission
+    async function checkTransactionStatus(email) {
+        try {
+            const response = await fetch(`http://your-api-domain.com/api/transactionstatus/${email}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
 
-    const form = event.target;
-    const formData = new FormData(form);
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
 
-    try {
-      const response = await fetch('checktran2.php', {
-        method: 'POST', // Use 'POST' if your server expects POST requests
-        body: formData
-      });
+            const data = await response.json();
 
-      if (!response.ok) {
-        throw new Error(`Server error: ${response.status}`);
-      }
-
-      const result = await response.text(); // Adjust based on expected response format
-      document.getElementById('response-message').innerHTML = result;
-    } catch (error) {
-      console.error('Error:', error);
-      document.getElementById('response-message').innerHTML = 'An error occurred. Please try again.';
+            if (data.success) {
+                console.log("Transaction Details:");
+                console.log("Email:", data.email);
+                console.log("Reference:", data.reference);
+                console.log("Status:", data.status);
+                console.log("Amount:", data.amount);
+                console.log("Date:", data.date);
+                console.log("Payment Details:", data.paymentDetails);
+            } else {
+                console.log("Error:", data.message);
+            }
+        } catch (error) {
+            console.error("Error fetching transaction status:", error.message);
+        }
     }
-  });
+
+    // Example usage:
+    // Replace "user@example.com" with the email of the user whose transaction status you want to check.
+    checkTransactionStatus("user@example.com");
 </script>
 <div style="clear:both"></div>
       <p style="text-align:center; padding:10px;"><b> For Support: Send a mail to <a
