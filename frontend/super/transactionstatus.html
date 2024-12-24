@@ -297,23 +297,69 @@
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group bmd-form-group">
-                    <label class="bmd-label-floating">Type Buyer Email</label>
-                    <input name="email" type="email" class="form-control" required>
-                  </div>
-                </div>
-              </div>
-              <hr>
-              <button type="submit" class="btn btn-success pull-right">Check</button>
-              <div class="clearfix"></div>
-            </form>
-            <!-- Placeholder for displaying response -->
-            <div id="response-message" style="margin-top: 20px;"></div>
-          </div>
+  <label class="bmd-label-floating">Type Buyer Email</label>
+  <input id="buyerEmail" name="email" type="email" class="form-control" required placeholder="Enter buyer's email">
+</div>
+</div>
+</div>
+<hr>
+<button id="checkTransactionButton" type="submit" class="btn btn-success pull-right">Check</button>
+<div class="clearfix"></div>
+<!-- Placeholder for displaying response -->
+<div id="response-message" style="margin-top: 20px;"></div>
+        </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+  document.getElementById("checkTransactionButton").addEventListener("click", async (e) => {
+    e.preventDefault(); // Prevent form submission
+
+    const email = document.getElementById("buyerEmail").value;
+    const responseMessage = document.getElementById("response-message");
+
+    // Clear previous message
+    responseMessage.innerHTML = "Checking transaction status...";
+
+    if (!email) {
+      responseMessage.innerHTML = "<span style='color: red;'>Please enter a valid email.</span>";
+      return;
+    }
+
+    try {
+      const response = await fetch(`/api/transactions/status/${email}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        responseMessage.innerHTML = `
+          <div style="border: 1px solid #ccc; padding: 15px; border-radius: 5px;">
+            <h4>Transaction Status</h4>
+            <p><strong>Email:</strong> ${data.email}</p>
+            <p><strong>Reference:</strong> ${data.reference}</p>
+            <p><strong>Status:</strong> ${data.status}</p>
+            <p><strong>Message:</strong> ${data.message}</p>
+            <p><strong>Amount:</strong> ₦${data.amount}</p>
+            <p><strong>Date:</strong> ${new Date(data.date).toLocaleString()}</p>
+          </div>
+        `;
+      } else {
+        responseMessage.innerHTML = `<span style="color: red;">Error: ${data.message}</span>`;
+      }
+    } catch (error) {
+      console.error("Error fetching transaction status:", error);
+      responseMessage.innerHTML = `<span style="color: red;">An error occurred while checking the transaction status. Please try again.</span>`;
+    }
+  });
+</script>
 <script>
     async function checkTransactionStatus(email) {
         try {
