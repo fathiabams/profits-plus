@@ -151,43 +151,7 @@
                 </ul>
               </div>
                             
-                            <script>
-  // Function to handle logout
-  async function handleLogout() {
-    try {
-      // Make a request to the backend logout endpoint
-      const response = await fetch("https://profitplusbackend.com.ng/logout", {
-        method: "POST", // Use POST or the method your backend expects
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include", // Include cookies if using cookie-based authentication
-      });
-
-      const data = await response.json();
-
-      if (response.ok && data.success) {
-        // Clear any stored authentication data (e.g., tokens in localStorage/sessionStorage)
-        localStorage.removeItem("authToken");
-
-        // Redirect the user to the login page
-        window.location.href = "../login.html";
-      } else {
-        console.error("Logout failed:", data.message);
-        alert(data.message || "Failed to log out. Please try again.");
-      }
-    } catch (error) {
-      console.error("Error during logout:", error.message);
-      alert("An error occurred. Please try again.");
-    }
-  }
-
-  // Attach the logout function to the logout button
-  document.querySelector(".nav-link").addEventListener("click", (e) => {
-    e.preventDefault(); // Prevent the default anchor behavior
-    handleLogout();
-  });
-</script>
+                            
                         
             <!-- <div class="sidebar-wrapper ps-container ps-theme-default ps-active-y"
                 data-ps-id="7cd47e37-4e12-0f9e-bda2-91610a0a8ed7">
