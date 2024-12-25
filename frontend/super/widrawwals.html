@@ -282,91 +282,105 @@
                 </div>
             </nav>
             <!-- End Navbar -->
-
             <div class="content">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="card">
-                                <div class="card-header card-header-success">
-                                    <h4 class="card-title">Withdrawals</h4>
-
-
-
-
-                                </div>
-                                <div class="card-body">
-  <table class="col-lg-12 table table-responsive table-striped table-hover" id="withdrawalsTable">
-    <thead class="text-primary">
-      <tr>
-        <th>Amount</th>
-        <th>Status</th>
-        <th>Bank</th>
-        <th>Acct</th>
-        <th>Date</th>
-      </tr>
-    </thead>
-    <tbody id="withdrawalsTableBody">
-      <!-- Rows will be populated dynamically -->
-    </tbody>
-  </table>
-</div>
-<script>
-  document.addEventListener("DOMContentLoaded", async () => {
-    const tableBody = document.getElementById("withdrawalsTableBody");
-
-    try {
-      // Fetch data from the backend
-      const response = await fetch("/api/withdrawals", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      const result = await response.json();
-
-      if (response.ok && result.success) {
-        const withdrawals = result.data;
-
-        // Populate the table
-        if (withdrawals.length > 0) {
-          withdrawals.forEach((withdrawal) => {
-            const row = document.createElement("tr");
-
-            row.innerHTML = `
-              <td>$${withdrawal.amount}</td>
-              <td>${withdrawal.status}</td>
-              <td>${withdrawal.bankName}</td>
-              <td>${withdrawal.accountNumber}</td>
-              <td>${new Date(withdrawal.date).toLocaleDateString()}</td>
-            `;
-
-            tableBody.appendChild(row);
-          });
-        } else {
-          // Show a message if no withdrawals are found
-          const row = document.createElement("tr");
-          row.innerHTML = `<td colspan="5">No withdrawals found.</td>`;
-          tableBody.appendChild(row);
-        }
-      } else {
-        console.error("Failed to fetch withdrawals:", result.message);
-      }
-    } catch (error) {
-      console.error("Error fetching withdrawals:", error.message);
-    }
-  });
-</script>
-
-                                <div class="clearfix"></div>
-
-                            </div>
-                        </div>
+    <div class="container-fluid">
+        <div class="navbar-wrapper">
+            <a class="navbar-brand" href="#pablo">Withdrawals</a>
+        </div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navigation-index">
+            <!-- Navbar content -->
+        </div>
+    </div>
+</nav>
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-success">
+                        <h4 class="card-title">Withdrawals</h4>
                     </div>
+                    <div class="card-body">
+                        <table class="col-lg-12 table table-responsive table-striped table-hover" id="withdrawalsTable">
+                            <thead class="text-primary">
+                                <tr>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                    <th>Bank</th>
+                                    <th>Acct</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody id="withdrawalsTableBody">
+                                <!-- Rows will be populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <script>
+                        document.addEventListener("DOMContentLoaded", async () => {
+                            const tableBody = document.getElementById("withdrawalsTableBody");
 
+                            try {
+                                const response = await fetch("/api/withdrawals", {
+                                    method: "GET",
+                                    headers: {
+                                        "Content-Type": "application/json",
+                                    },
+                                });
+
+                                const result = await response.json();
+
+                                if (response.ok && result.success) {
+                                    const withdrawals = result.data;
+
+                                    if (withdrawals.length > 0) {
+                                        withdrawals.forEach((withdrawal) => {
+                                            const row = document.createElement("tr");
+
+                                            const maskedAccount = withdrawal.accountNumber.replace(/.(?=.{4})/g, '*');
+                                            const formattedDate = new Date(withdrawal.date).toLocaleDateString('en-US', {
+                                                year: 'numeric',
+                                                month: 'short',
+                                                day: 'numeric',
+                                            });
+
+                                            row.innerHTML = `
+                                                <td>$${withdrawal.amount}</td>
+                                                <td>${withdrawal.status}</td>
+                                                <td>${withdrawal.bankName}</td>
+                                                <td>${maskedAccount}</td>
+                                                <td>${formattedDate}</td>
+                                            `;
+
+                                            tableBody.appendChild(row);
+                                        });
+                                    } else {
+                                        tableBody.innerHTML = `<tr><td colspan="5">No withdrawals found.</td></tr>`;
+                                    }
+                                } else {
+                                    tableBody.innerHTML = `<tr><td colspan="5">Error loading withdrawals. Please try again later.</td></tr>`;
+                                    console.error("Failed to fetch withdrawals:", result.message);
+                                }
+                            } catch (error) {
+                                console.error("Error fetching withdrawals:", error.message);
+                                tableBody.innerHTML = `<tr><td colspan="5">Error loading withdrawals. Please try again later.</td></tr>`;
+                            }
+                        });
+                    </script>
+                    <div class="clearfix"></div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+ 
             <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;">
                 <div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div>
             </div>
