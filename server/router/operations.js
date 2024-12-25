@@ -45,7 +45,8 @@ appRouter.route("/api/userdash").get(protect, userdash);
 
 // Payment and Withdrawal Routes
 appRouter.route("/api/payments").get(protect, payments);
-appRouter.route("/api/withdrawals").post(protect, withdrawal);
+appRouter.route("/api/withdrawal").post(protect, withdrawal); // Route for initiating a withdrawal
+appRouter.route("/api/withdrawals").get(protect, withdrawals); // Route for fetching all withdrawals
 
 // Affiliate Routes
 appRouter.route("/api/affiliate/:courseId/:affiliateId").get(protect, affiliatereferrals);
