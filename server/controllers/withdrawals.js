@@ -1,6 +1,6 @@
+
 const express = require('express');
 const app = express();
-const { getWithdrawalsByUserId } = require('./models'); // You will need to implement this model
 const port = 3000;
 
 app.use(express.json());
@@ -14,7 +14,7 @@ app.get('/api/withdrawals', async (req, res) => {
     }
 
     try {
-        // Fetch withdrawals from the database (You need to implement this part)
+        // Fetch withdrawals from the database
         const withdrawals = await getWithdrawalsByUserId(userId);
 
         if (withdrawals.length > 0) {
@@ -28,18 +28,11 @@ app.get('/api/withdrawals', async (req, res) => {
     }
 });
 
-// Assuming you have a function that interacts with your database
+// Function to interact with the database (replace with actual logic)
 async function getWithdrawalsByUserId(userId) {
-    // Replace this with actual database logic, e.g., querying your database
-    // For demonstration, let's assume we return a static list of withdrawals
-
-    const mockWithdrawals = [
-        { amount: 100, status: 'Approved', bankName: 'Bank A', accountNumber: '1234567890', date: '2024-12-20' },
-        { amount: 200, status: 'Pending', bankName: 'Bank B', accountNumber: '9876543210', date: '2024-12-21' },
-    ];
-
-    // Simulating data for the given userId
-    return mockWithdrawals.filter((withdrawal) => withdrawal.userId === userId);
+    // Replace this with actual database query logic
+    // Return an array of withdrawals filtered by userId
+    return [];
 }
 
 app.listen(port, () => {
