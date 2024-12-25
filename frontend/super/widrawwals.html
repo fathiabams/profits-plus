@@ -324,55 +324,61 @@
                         </table>
                     </div>
                     <script>
-                        document.addEventListener("DOMContentLoaded", async () => {
-                            const tableBody = document.getElementById("withdrawalsTableBody");
+                        
+                          document.addEventListener("DOMContentLoaded", async () => {
+    const tableBody = document.getElementById("withdrawalsTableBody");
 
-                            try {
-                                const response = await fetch("/api/withdrawals", {
-                                    method: "GET",
-                                    headers: {
-                                        "Content-Type": "application/json",
-                                    },
-                                });
+    // Fetch the logged-in user's ID (you need to implement this function depending on your authentication system)
+    const userId = getLoggedInUserId();  // Example function to get userId
 
-                                const result = await response.json();
+    try {
+        // Fetch withdrawals data for the logged-in user
+        const response = await fetch(`/api/withdrawals?userId=${userId}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
 
-                                if (response.ok && result.success) {
-                                    const withdrawals = result.data;
+        const result = await response.json();
 
-                                    if (withdrawals.length > 0) {
-                                        withdrawals.forEach((withdrawal) => {
-                                            const row = document.createElement("tr");
+        if (response.ok && result.success) {
+            const withdrawals = result.data;
 
-                                            const maskedAccount = withdrawal.accountNumber.replace(/.(?=.{4})/g, '*');
-                                            const formattedDate = new Date(withdrawal.date).toLocaleDateString('en-US', {
-                                                year: 'numeric',
-                                                month: 'short',
-                                                day: 'numeric',
-                                            });
+            if (withdrawals.length > 0) {
+                withdrawals.forEach((withdrawal) => {
+                    const row = document.createElement("tr");
 
-                                            row.innerHTML = `
-                                                <td>$${withdrawal.amount}</td>
-                                                <td>${withdrawal.status}</td>
-                                                <td>${withdrawal.bankName}</td>
-                                                <td>${maskedAccount}</td>
-                                                <td>${formattedDate}</td>
-                                            `;
+                    const maskedAccount = withdrawal.accountNumber.replace(/.(?=.{4})/g, '*');
+                    const formattedDate = new Date(withdrawal.date).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                    });
 
-                                            tableBody.appendChild(row);
-                                        });
-                                    } else {
-                                        tableBody.innerHTML = `<tr><td colspan="5">No withdrawals found.</td></tr>`;
-                                    }
-                                } else {
-                                    tableBody.innerHTML = `<tr><td colspan="5">Error loading withdrawals. Please try again later.</td></tr>`;
-                                    console.error("Failed to fetch withdrawals:", result.message);
-                                }
-                            } catch (error) {
-                                console.error("Error fetching withdrawals:", error.message);
-                                tableBody.innerHTML = `<tr><td colspan="5">Error loading withdrawals. Please try again later.</td></tr>`;
-                            }
-                        });
+                    row.innerHTML = `
+                        <td>$${withdrawal.amount}</td>
+                        <td>${withdrawal.status}</td>
+                        <td>${withdrawal.bankName}</td>
+                        <td>${maskedAccount}</td>
+                        <td>${formattedDate}</td>
+                    `;
+
+                    tableBody.appendChild(row);
+                });
+            } else {
+                tableBody.innerHTML = `<tr><td colspan="5">No withdrawals found.</td></tr>`;
+            }
+        } else {
+            tableBody.innerHTML = `<tr><td colspan="5">Error loading withdrawals. Please try again later.</td></tr>`;
+            console.error("Failed to fetch withdrawals:", result.message);
+        }
+    } catch (error) {
+        console.error("Error fetching withdrawals:", error.message);
+        tableBody.innerHTML = `<tr><td colspan="5">Error loading withdrawals. Please try again later.</td></tr>`;
+    }
+});  
+                        
                     </script>
                     <div class="clearfix"></div>
                 </div>
