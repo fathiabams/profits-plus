@@ -566,6 +566,50 @@
                                 </div>
                             </div>
                         </div>
+                        // Function to initiate the withdrawal
+async function initiateWithdraw(amount, bankName, accountNumber) {
+    const token = localStorage.getItem('authToken'); // Retrieve JWT token from localStorage
+
+    if (!token) {
+        console.error('User is not authenticated');
+        return;
+    }
+
+    try {
+        const response = await fetch('https://profitplusbackend.com.ng/api/initiatewithdraw', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,  // Send the token as part of the Authorization header
+            },
+            body: JSON.stringify({
+                amount,         // Withdrawal amount
+                bankName,       // User's bank name
+                accountNumber,  // User's bank account number
+            }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            console.log('Withdrawal initiated successfully:', data.message);
+            // Handle success, maybe update the UI
+        } else {
+            console.error('Error:', data.message);
+            // Handle error, show error message to user
+        }
+    } catch (error) {
+        console.error('Error initiating withdrawal:', error);
+        // Handle network or server errors
+    }
+}
+
+// Example usage
+const amount = 100;  // Amount to withdraw
+const bankName = 'Example Bank';
+const accountNumber = '1234567890';
+
+initiateWithdraw(amount, bankName, accountNumber);
 
                         <div style="display: none" class="col-lg-3 col-md-6 col-sm-6">
                             <div class="card card-stats">
