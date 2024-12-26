@@ -60,12 +60,12 @@
                             <p style="color: black">Marketplace</p>
                         </a>
                     </li>
-                    <!-- <li class="nav-item">
+                    <li class="nav-item">
                                                     <a class="nav-link" href="createaccaim.php">
                                                       <i class="material-icons">school</i>
-                                                      <p style="color: black">AIM Course</p>
+                                                      <p style="color: black">ABIM Course</p>
                                                     </a>
-                                                  </li> -->
+                                                  </li> 
                     <li class="nav-item">
                         <a class="nav-link" href="transactionstatus.html">
                             <i class="material-icons">library_books</i>
@@ -79,24 +79,24 @@
                                                     </a>
                                                   </li> -->
 
-                    <!-- <li class="nav-item">
+                     <li class="nav-item">
                                                     <a class="nav-link" href="stars3.php?active=24535675454424">
                                                       <i class="material-icons">star</i>
                                                       <p style="color: black">Affiliate Leaderboard</p>
                                                     </a>
-                                                  </li> -->
-                    <!-- <li class="nav-item">
+                                                  </li> 
+                    < <li class="nav-item">
                                                     <a class="nav-link" href="stars.php?active=24535675454">
                                                       <i class="material-icons">star</i>
-                                                      <p style="color: black">PromptEarn Challenge</p>
+                                                      <p style="color: black">Profitplus Challenge</p>
                                                     </a>
-                                                  </li> -->
-                    <!-- <li class="nav-item">
+                                                  </li> 
+                     <li class="nav-item">
                                                     <a class="nav-link" href="stagess.php?active=245356745675485454">
                                                       <i class="material-icons">school</i>
                                                       <p style="color: black">Achievement Certificate</p>
                                                     </a>
-                                                  </li> -->
+                                                  </li> 
                     <li class="nav-item">
                         <a class="nav-link active" href="becomeavendor.html">
                             <i class="material-icons">content_paste</i>
@@ -146,11 +146,49 @@
                             <i class="material-icons">logout</i>
                             <p style="color: black">Logout</p>
                             
+                            
                         </a>
                   </li>
                 </ul>
               </div>
-                            
+// Function to handle logout
+  async function handleLogout() {
+    try {
+      // Make a request to the backend logout endpoint
+      const response = await fetch("https://profitplusbackend.com.ng/logout", {
+        method: "POST", // Use POST or the method your backend expects
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include", // Include cookies if using cookie-based authentication
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        // Clear any stored authentication data (e.g., tokens in localStorage/sessionStorage)
+        localStorage.removeItem("authToken");
+
+        // Redirect the user to the login page
+        window.location.href = "../login.html";
+      } else {
+        console.error("Logout failed:", data.message);
+        alert(data.message || "Failed to log out. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error during logout:", error.message);
+      alert("An error occurred. Please try again.");
+    }
+  }
+
+  // Attach the logout function to the logout button
+  document.querySelector(".nav-link").addEventListener("click", (e) => {
+    e.preventDefault(); // Prevent the default anchor behavior
+    handleLogout();
+  });
+                    </script>
+                    
+            
                             
                         
             <!-- <div class="sidebar-wrapper ps-container ps-theme-default ps-active-y"
