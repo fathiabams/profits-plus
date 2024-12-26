@@ -12,7 +12,8 @@ const {
 const { userdash } = require("../controllers/dashboard");
 const { admindashboard } = require("../controllers/adminDashBoard");
 const { payments } = require("../controllers/paymentConfirmation");
-const { withdrawal } = require("../controllers/withdrawal");
+const { withdrawal } = require("../controllers/withdrawal"); // Import the withdrawals function
+const {  withdrawals } = require("../controllers/withdrawals")
 const { coursesales } = require("../controllers/sales");
 const { commissionsales } = require("../controllers/commisionsales");
 const {
@@ -29,6 +30,7 @@ const {
 } = require("../controllers/coursepayment");
 const { checkTransactionStatusByEmail } = require("../controllers/transactionstatus");
 const { logout } = require("../controllers/logout");
+const { getTopAffiliate } = require("../controllers/affiliate"); // Import the getTopAffiliate function
 
 const appRouter = express.Router();
 
@@ -70,5 +72,8 @@ appRouter.route("/api/payment-callback").get(paymentcallback);
 
 // Transaction Status Route
 appRouter.route("/api/transaction-status/:email").get(protect, checkTransactionStatusByEmail);
+
+// Top Affiliate Route
+appRouter.route("/api/top-affiliate").get(protect, getTopAffiliate);
 
 module.exports = appRouter;
