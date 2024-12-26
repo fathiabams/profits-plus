@@ -239,6 +239,42 @@
           </div>
         </div>
       </div>
+      <script>
+  // Construct the API endpoint URL
+  const apiUrl = 'https://profitplusbackend.com.ng/api/top-affiliate';
+
+  // Make the GET request to the API
+  fetch(apiUrl)
+    .then(response => {
+      // Check if the response is successful
+      if (!response.ok) {
+        // Log the response status and status text for debugging
+        console.error(`HTTP error! Status: ${response.status} - ${response.statusText}`);
+        // Throw an error to be caught in the catch block
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      // Parse the JSON response
+      return response.json();
+    })
+    .then(data => {
+      // Handle the data received from the API
+      console.log('Top Affiliate Data:', data);
+      // Update your frontend UI with this data
+      const topAffiliate = data.topAffiliate;
+      const leaderboard = document.getElementById('leaderboard');
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>1</td>
+        <td>${topAffiliate.name}</td>
+        <td>${topAffiliate.totalSales}</td>
+      `;
+      leaderboard.appendChild(row);
+    })
+    .catch(error => {
+      // Handle any errors that occurred during the fetch
+      console.error('Error fetching top affiliate data:', error);
+    });
+      </script>
 
       <div style="clear:both"></div>
       <p style="text-align:center; padding:10px;"><b> For Support: Send a mail to <a
