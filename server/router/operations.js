@@ -12,7 +12,7 @@ const {
 const { userdash } = require("../controllers/dashboard");
 const { admindashboard } = require("../controllers/adminDashBoard");
 const { payments } = require("../controllers/paymentConfirmation");
-const { withdrawal } = require("../controllers/withdrawal"); // Import the withdrawals function
+const { initiatewithdraw } = require("../controllers/initiatewithdraw"); // Import the withdrawals function
 const {  withdrawals } = require("../controllers/withdrawals")
 const { coursesales } = require("../controllers/sales");
 const { commissionsales } = require("../controllers/commisionsales");
@@ -47,7 +47,7 @@ appRouter.route("/api/userdash").get(protect, userdash);
 
 // Payment and Withdrawal Routes
 appRouter.route("/api/payments").get(protect, payments);
-appRouter.route("/api/withdrawal").post(protect, withdrawal); // Route for initiating a withdrawal
+appRouter.route("/api/initiatewithdraw").post(protect, initiatewithdraw ); // Route for initiating a withdrawal
 appRouter.route("/api/withdrawals").get(protect, withdrawals); // Route for fetching all withdrawals
 
 // Affiliate Routes
