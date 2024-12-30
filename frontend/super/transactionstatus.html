@@ -25,10 +25,53 @@
     src="https://maps.googleapis.com/maps-api-v3/api/js/58/6/util.js"></script>
   <script type="text/javascript" charset="UTF-8"
     src="https://maps.googleapis.com/maps-api-v3/api/js/58/6/log.js"></script>
+
+  <style>
+    @media screen and (min-width: 990px) {
+            .navbar-custom {
+                left: 260px;
+            }
+        }
+        
+        @media (max-width: 767px) {
+            .sidebar {
+                display: none;
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 250px;
+                height: 100%;
+                background-color: #eee;
+                transition: left 0.3s ease;
+            }
+            .sidebar.active {
+    display: block;
+                left: 0; }
+                
+.navbar-toggler {
+  position: relative;
+  z-index: 1100;
+}
+.sidebar.open {
+                display: block;
+                left: 0;
+            }
+
+            .navbar-toggler {
+                display: block;
+                cursor: pointer;
+            }
+  </style>
 </head>
 
 <body class="" data-new-gr-c-s-check-loaded="14.1084.0" data-gr-ext-installed="">
   <div class="wrapper ">
+    <!-- Hamburger Icon -->
+        <div class="navbar-toggler" id="navbar-toggler">
+            <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon"></span>
+        </div>
 
     <div class="sidebar" data-color="white" data-background-color="green" data-image="assets/img/sidebar-1.jpg">
       <!--
@@ -148,7 +191,7 @@
                   </li>
               
                   <li class="nav-item">
-                    <a class="nav-link" href="">
+                    <a class="nav-link" href="../index.html">
                       <i class="material-icons">logout</i>
                       <p style="color: black">Logout</p>
                       </a>
@@ -312,7 +355,7 @@
           <div class="navbar-wrapper">
             <a class="navbar-brand" href="#pablo">Dashboard</a>
           </div>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index"
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".sidebar" aria-controls="navigation-index"
             aria-expanded="false" aria-label="Toggle navigation">
             <span class="sr-only">Toggle navigation</span>
             <span class="navbar-toggler-icon icon-bar"></span>
@@ -531,6 +574,33 @@
 
     });
   </script>
+  <script>
+    function toggleSidebar() {
+        const sidebar = document.querySelector('.sidebar');
+        sidebar.classList.toggle('active');
+    }
+</script>
+
+<script>
+    $(document).ready(function() {
+        // Toggle the sidebar when the hamburger menu is clicked
+        $('#navbar-toggler').click(function() {
+            $('.sidebar').toggleClass('open');
+            $(this).toggleClass('active');
+        });
+    });
+</script>      
+
+<script>
+  // Get the hamburger button and the sidebar
+  const navbarToggler = document.querySelector(".navbar-toggler");
+  const sidebar = document.querySelector(".sidebar");
+
+  // Toggle sidebar visibility on button click
+  navbarToggler.addEventListener("click", () => {
+    sidebar.classList.toggle("active");
+  });
+</script>
 
 
 </body><grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration>
