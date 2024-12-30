@@ -48,7 +48,8 @@ const userRegister = asyncHandler(async (req, res) => {
     console.log(username, email, password)
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(400).json({ message: "User already registered" });
+      res.status(400).json({ message: "User already registered" });
+      return
     }
     console.log(username, email, password);
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -65,7 +66,7 @@ const userRegister = asyncHandler(async (req, res) => {
         .header("Authorization", `Bearer ${token}`)
         .status(200)
         .json({message: "Registration Successful"})
-
+      
       await sendWelcomeEmail(email, username);
     } else {
       res.status(403).json({ message: "Registration failed" });
@@ -147,11 +148,11 @@ const sendWelcomeEmail = async (email, username) => {
   <div class="container">
     <h1>Welcome to PROFIT PLUS!</h1>
     <p>Hi ${username},</p>
-    <p>We’re thrilled to have you join us! As a new affiliate with https://www.theprofitplus.com.ng/, you’re now part of a community dedicated to success and growth. We're here to support you in maximizing your earnings and achieving your goals.</p>
+    <p>We're thrilled to have you join us! As a new affiliate with https://www.theprofitplus.com.ng/, you're now part of a community dedicated to success and growth. We're here to support you in maximizing your earnings and achieving your goals.</p>
     <p>Start exploring our platform and discover the tools and resources available to help you get the most out of your affiliate journey.</p>
     <a href="https://www.theprofitplus.com.ng/" class="cta-button">Get Started Now</a>
     <p>If you have any questions or need assistance, our support team is just an email away. We look forward to working with you!</p>
-    <p>Welcome aboard, and here’s to your success!</p>
+    <p>Welcome aboard, and here's to your success!</p>
     <p>Best regards,<br>The profit plus Team</p>
     <div class="footer">
       © [Year] profit plus. All rights reserved.<br>
@@ -174,6 +175,7 @@ const sendWelcomeEmail = async (email, username) => {
 const userlogin = async (req, res) => {
   try {
     const { email, password } = req.body;
+    console.log(email, password)
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(401).send({ message: "Invalid email or password" });
@@ -186,10 +188,11 @@ const userlogin = async (req, res) => {
       expiresIn: "1h",
     });
     res.cookie("token", token);
-    res
-      .header("Authorization", `Bearer ${token}`)
-      .status(200)
-      .json({ ...user._doc });
+    res.status(200).json({
+      "message": "User signed in successfully",
+      "token": token
+    })
+     
   } catch (error) {
     res.status(401).json({ message: error });
     console.error(`error ${error}`);

@@ -2,7 +2,7 @@
 
 const mongoose = require("mongoose");
 
-const course = new mongoose.Schema({
+const courseSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true,
@@ -33,5 +33,6 @@ const course = new mongoose.Schema({
         },
     ],
 });
+const Course = mongoose.model("Course", courseSchema);
 
-module.exports = mongoose.model("Course", course);
+export default Course

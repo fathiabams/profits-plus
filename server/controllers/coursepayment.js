@@ -1,35 +1,41 @@
-// controllers/paymentController.js
 const initializePayment = require("./paystackservice");
-const User = require("../model/courseschema");
+const User = require("../model/user");
+const Learner = require("../model/learner"); // Updated model name
 const Payment = require("../model/Payment");
 const bcrypt = require("bcryptjs");
-const axios = require('axios');
-const nodemailer = require('nodemailer')
-const jwt = require("jsonwebtoken")
-const courseuser= require('../model/courseschema.js')
-const registerAndPay = async (req, res) => {
-    const amount =400000
-    const { name, email, phone, password, courseid} = req.body;
-    console.log(name);
+const axios = require("axios");
+const nodemailer = require("nodemailer");
+const jwt = require("jsonwebtoken");
 
+// Register and pay (for learners)
+const registerAndPay = async (req, res) => {
+    const amount = 400000; // Payment amount in kobo
+    const { name, email, phone, password, courseid } = req.body;
     const reference = `REF-${Date.now()}`;
-  
     const callbackUrl = "https://profitplusbackend.com.ng/api/v1/payment-callback";
 
     try {
-        let user = await User.findOne({ email });
-        if (!user) {
-            const hashedPassword = await bcrypt.hash(password, 10);
-            user = await courseuser.create({
-                name,
-                email,
-                phone,
-                password: hashedPassword,
-                courseid
-            });
-        } else {
-            res.status(401).json({ message: "User Exist" });
+        let affiliateUser = await User.findOne({email})
+        let user = await Learner.findOne({ email });
+        if (user) {
+            res.status(401).json({ message: "User already exists" });
+            return
         }
+        if(!affiliateUser){
+            res.status(401).json(
+                {message: "You must register as a user from our affiliate site before you can register for a course"}
+            )
+            return 
+        }
+        const hashedPassword = await bcrypt.hash(password, 10);
+        user = await Learner.create({
+            name,
+            email,
+            phone,
+            password: hashedPassword,
+            courseid,
+        });
+
         const paymentData = await initializePayment(
             email,
             amount,
@@ -53,21 +59,19 @@ const registerAndPay = async (req, res) => {
         });
     } catch (error) {
         console.error("Payment initialization error:", error.message);
-        res
-            .status(500)
-            .json({
-                success: false,
-                message: "Payment initialization failed",
-                error: error.message,
-            });
+        res.status(500).json({
+            success: false,
+            message: "Payment initialization failed",
+            error: error.message,
+        });
     }
 };
 
+// Payment callback
 const paymentcallback = async (req, res) => {
-    const { reference, trxref } = req.query;
+    const { reference } = req.query;
 
     try {
-        // Verify the payment with Paystack using the transaction reference
         const verifyPaymentResponse = await axios.get(
             `https://api.paystack.co/transaction/verify/${reference}`,
             {
@@ -80,161 +84,88 @@ const paymentcallback = async (req, res) => {
         if (verifyPaymentResponse.data.status) {
             const paymentData = verifyPaymentResponse.data.data;
 
-            // Check payment status
             if (paymentData.status === "success") {
                 await Payment.updateOne({ reference }, { status: "successful" });
-                console.log(paymentData.customer.email)
                 await sendSuccessEmail(paymentData.customer.email, paymentData);
-
-                await Payment.updateOne({ reference }, { status: "sucessful" });;
-
-                return res.redirect("https://www.theprofitplus.com.ng/frontend/super/sucess.html"); // Adjust the redirect URL as needed
+                return res.redirect("https://www.theprofitplus.com.ng/frontend/super/success.html");
             } else {
                 await Payment.updateOne({ reference }, { status: "failed" });
-
-                await deleteUser(paymentData.email); 
                 return res.status(400).json({
                     success: false,
-                    message: "Payment was not successful. User deleted.",
+                    message: "Payment was not successful.",
                 });
             }
         } else {
-            return res
-                .status(400)
-                .json({ success: false, message: "Payment verification failed." });
+            return res.status(400).json({
+                success: false,
+                message: "Payment verification failed.",
+            });
         }
     } catch (error) {
-        console.error("Payment verification error:", error);
-        return res
-            .status(500)
-            .json({
-                success: false,
-                message: "Internal server error",
-                error: error.message,
-            });
+        console.error("Payment verification error:", error.message);
+        res.status(500).json({
+            success: false,
+            message: "Internal server error",
+            error: error.message,
+        });
     }
 };
 
+// Send success email
 const sendSuccessEmail = async (recipientEmail, paymentData) => {
-
     const transporter = nodemailer.createTransport({
-        service: process.env.EMAIL_SERVICE, // e.g., 'Gmail'
+        service: process.env.EMAIL_SERVICE,
         auth: {
             user: process.env.EMAIL_USER,
             pass: process.env.EMAIL_PASS,
         },
     });
-    console.log(recipientEmail)
-    // Email options
+
     const mailOptions = {
-        from: process.env.EMAIL_USER, // sender address
-        to: recipientEmail, // list of receivers
-        subject: "Payment Successful!", // Subject line
-        html: `<!DOCTYPE html>
-            <html lang="en">
-            <head>
-                <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>Payment Successful</title>
-                <style>
-                    body {
-                        font-family: Arial, sans-serif;
-                        background-color: #f4f4f4;
-                        margin: 0;
-                        padding: 20px;
-                    }
-
-                    .container {
-                        max-width: 600px;
-                        margin: auto;
-                        background: #ffffff;
-                        border-radius: 8px;
-                        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-                        overflow: hidden;
-                    }
-
-                    .header {
-                        background: #28a745;
-                        color: #ffffff;
-                        padding: 20px;
-                        text-align: center;
-                    }
-
-                    .header h1 {
-                        margin: 0;
-                    }
-
-                    .content {
-                        padding: 20px;
-                        line-height: 1.6;
-                    }
-
-                    .footer {
-                        background: #f4f4f4;
-                        text-align: center;
-                        padding: 10px;
-                        font-size: 0.9em;
-                    }
-
-                    .footer p {
-                        margin: 5px 0;
-                    }
-
-                    .highlight {
-                        color: #28a745; /* Success color */
-                        font-weight: bold;
-                    }
-                </style>
-            </head>
-            <body>
-                <div class="container">
-                    <div class="header">
-                        <h1>Payment Successful!</h1>
-                    </div>
-                    <div class="content">
-                        <p>Dear User,</p>
-                        <p>Your payment of <span class="highlight">${paymentData.amount/100}</span> was successful!</p>
-                        <p>Transaction Reference: <span class="highlight">${paymentData.reference}</span></p>
-                        <p>Thank you for your payment!</p>
-                    </div>
-                    <div class="footer">
-                        <p>Best regards,</p>
-                        <p>Your Company Name</p>
-                    </div>
-                </div>
-            </body>
-            </html>`,
+        from: process.env.EMAIL_USER,
+        to: recipientEmail,
+        subject: "Payment Successful!",
+        html: `
+        <div style="font-family: Arial, sans-serif; text-align: center; padding: 20px;">
+            <h2>Payment Successful!</h2>
+            <p>Your payment of <strong>${paymentData.amount / 100}</strong> was successful.</p>
+            <p>Transaction Reference: <strong>${paymentData.reference}</strong></p>
+            <p>Thank you for your payment!</p>
+        </div>`,
     };
-
 
     await transporter.sendMail(mailOptions);
 };
 
-
+// Learner login
 const courselogin = async (req, res) => {
+    const { email, password } = req.body;
+
     try {
-        const { email, password } = req.body;
-        const user = await courseuser.findOne({ email });
+        const user = await Learner.findOne({ email });
         if (!user) {
-            return res.status(401).send({ message: "Invalid email or password" });
+            return res.status(401).json({ message: "Invalid email or password" });
         }
+
         const isValidPassword = await bcrypt.compare(password, user.password);
         if (!isValidPassword) {
-            res.status(401).json({ message: "Invalid email or password" });
+            return res.status(401).json({ message: "Invalid email or password" });
         }
+
         const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY, {
             expiresIn: "1h",
         });
+
         res.cookie("token", token);
-        res.status(200).json({ ...user._doc });
+        res.status(200).json({ success: true, user });
     } catch (error) {
-        res.status(401).json({ message: error });
-        console.error(`error ${error}`);
+        console.error("Login error:", error.message);
+        res.status(500).json({ success: false, message: "Internal server error" });
     }
 };
 
 module.exports = {
     registerAndPay,
     paymentcallback,
-    courselogin
+    courselogin,
 };
