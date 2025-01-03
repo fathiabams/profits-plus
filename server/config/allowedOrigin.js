@@ -8,6 +8,7 @@ const allowedOrigin = [
     "https://www.profitsplus115.com.ng",
     "http://www.profitsplus115.com.ng",
     "https://www.theprofitplus.com.ng",
+    "https://profits-plus-backend.onrender.com",
     "https://www.theprofitplus.com.ng",
     'https://www.theprofitplus.com.ng',
     'https://theprofitplus.com.ng'
