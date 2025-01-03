@@ -1192,26 +1192,28 @@
     }
 
     .carousel-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: #27ae60;
-      color: #ffffff;
-      border: none;
-      padding: 10px 15px;
-      cursor: pointer;
-      border-radius: 5px;
-      font-size: 1rem;
-      z-index: 2;
-    }
+  position: absolute;
+  bottom: 10px; /* Move buttons to the bottom */
+  transform: translateX(-50%); /* Center the buttons horizontally */
+  background: #27ae60;
+  color: #ffffff;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 1rem;
+  z-index: 2;
+}
 
-    .carousel-btn.left {
-      left: 10px;
-    }
+.carousel-btn.left {
+  left: 10px;
+}
 
-    .carousel-btn.right {
-      right: 10px;
-    }
+.carousel-btn.right {
+  right: 10px;
+}
+      
+
 
     .carousel-btn:disabled {
       background: #cccccc;
