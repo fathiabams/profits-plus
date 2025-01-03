@@ -954,7 +954,9 @@
         </div>
     </div>
 		
-    <section style="
+    <section>
+  <style>
+    body {
       font-family: 'Poppins', Arial, sans-serif;
       background: linear-gradient(120deg, #f4f4f9, #dfe6e9);
       margin: 0;
@@ -981,7 +983,6 @@
       letter-spacing: 1.5px;
     }
 
-    /* FAQ Item Styles */
     .faq-item {
       border-bottom: 1px solid #ddd;
       padding: 15px 0;
@@ -1002,12 +1003,10 @@
       transition: background 0.3s ease-in-out, transform 0.3s ease;
     }
 
-    /* Hover effect for question */
     .faq-question:hover {
       background: #ecf0f1;
       transform: scale(1.05);
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-      transition: all 0.3s ease-in-out;
     }
 
     .faq-question h3 {
@@ -1015,10 +1014,8 @@
       font-size: 1.1rem;
       color: #34495e;
       font-weight: 600;
-      transition: color 0.3s ease;
     }
 
-    /* Change color on hover */
     .faq-question:hover h3 {
       color: #27ae60;
     }
@@ -1029,13 +1026,11 @@
       transition: transform 0.3s ease, color 0.3s ease;
     }
 
-    /* Rotate arrow and change color on hover */
     .faq-question:hover .arrow {
       transform: rotate(180deg);
       color: #27ae60;
     }
 
-    /* Answer Section */
     .faq-answer {
       max-height: 0;
       overflow: hidden;
@@ -1050,29 +1045,11 @@
       line-height: 1.6;
     }
 
-    /* Active State - Answer Visible */
     .faq-item.active .faq-answer {
       max-height: 300px;
       opacity: 1;
     }
 
-    /* Additional Animation for Answer */
-    @keyframes answerSlide {
-      from {
-        max-height: 0;
-        opacity: 0;
-      }
-      to {
-        max-height: 300px;
-        opacity: 1;
-      }
-    }
-
-    .faq-item.active .faq-answer {
-      animation: answerSlide 0.6s ease-out;
-    }
-
-    /* General Animation for entire container */
     @keyframes fadeIn {
       from {
         opacity: 0;
@@ -1083,10 +1060,7 @@
         transform: translateY(0);
       }
     }
-
   </style>
-</head>
-<body>
   <div class="faq-container">
     <h1>Frequently Asked Questions</h1>
     <div class="faq-item">
@@ -1095,7 +1069,7 @@
         <span class="arrow">&#9662;</span>
       </div>
       <div class="faq-answer">
-        <p>Profit Plus is a digital marketplace that facilitates the sale of high-value digital and physical products. It connects skilled affiliates—marketers who promote and recommend products—with vendors who create these products. The platform offers a reliable payment system, high commission rates (up to 75% per sale), a curated product marketplace, regular training for affiliates, and strong support to ensure a seamless experience.</p>
+        <p>Profit Plus is a digital marketplace that facilitates the sale of high-value digital and physical products...</p>
       </div>
     </div>
     <div class="faq-item">
@@ -1104,7 +1078,7 @@
         <span class="arrow">&#9662;</span>
       </div>
       <div class="faq-answer">
-        <p>To make sales on Profit Plus, you can register as an affiliate, gain access to the product marketplace, and select products to promote. By sharing your unique affiliate links and effectively marketing the products, you earn commissions on each sale made through your link. The platform provides regular training to enhance your sales and marketing skills, helping you maximize your earnings.</p>
+        <p>To make sales on Profit Plus, you can register as an affiliate...</p>
       </div>
     </div>
     <div class="faq-item">
@@ -1113,7 +1087,7 @@
         <span class="arrow">&#9662;</span>
       </div>
       <div class="faq-answer">
-        <p>The ABIC course teaches affiliate marketing, forex, 3D animations, and monetization. It shows how to leverage affiliate marketing to fund your forex account, take trades based on strategies you learn, and get started with creating and monetizing 3D animations. These skills can help you say goodbye to financial struggles for good!</p>
+        <p>The ABIC course teaches affiliate marketing, forex, 3D animations, and monetization...</p>
       </div>
     </div>
     <div class="faq-item">
@@ -1122,7 +1096,7 @@
         <span class="arrow">&#9662;</span>
       </div>
       <div class="faq-answer">
-        <p>Profit Plus has a solid payment system that ensures you receive payments for every sale made through your affiliate links. Earnings are paid out weekly, with withdrawals processed on Sundays, allowing you to receive your money in your preferred bank account. The platform supports earnings in multiple currencies and offers favorable exchange rates for local bank deposits.</p>
+        <p>Profit Plus has a solid payment system that ensures you receive payments for every sale...</p>
       </div>
     </div>
     <div class="faq-item">
@@ -1131,7 +1105,7 @@
         <span class="arrow">&#9662;</span>
       </div>
       <div class="faq-answer">
-        <p>You can find more answers on the Profit Plus platform. Visit theprofitplus.com.ng for additional details and updates.</p>
+        <p>You can find more answers on the Profit Plus platform...</p>
       </div>
     </div>
   </div>
@@ -1139,21 +1113,17 @@
     document.querySelectorAll('.faq-question').forEach(question => {
       question.addEventListener('click', () => {
         const faqItem = question.parentElement;
-
-        // Toggle active state
         faqItem.classList.toggle('active');
-
-        // Close other open items
         document.querySelectorAll('.faq-item').forEach(item => {
-          if (item !== faqItem) {
-            item.classList.remove('active');
-          }
+          if (item !== faqItem) item.classList.remove('active');
         });
       });
     });
   </script>
-</body>
-</html>		
+</section>
+      
+    
+      	
 
     <section style="
           background-color: #05212f;
