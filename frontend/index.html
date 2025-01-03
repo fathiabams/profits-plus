@@ -1124,7 +1124,178 @@
     });
   </script>
 </section>
-      
+				
+      <section>
+  <style>
+    body {
+      font-family: 'Poppins', Arial, sans-serif;
+      background: linear-gradient(120deg, #f4f4f9, #dfe6e9);
+      margin: 0;
+      padding: 0;
+    }
+
+    .testimonials-container {
+      width: 90%;
+      max-width: 800px;
+      margin: 50px auto;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .testimonials-container h1 {
+      text-align: center;
+      color: #2c3e50;
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
+    .carousel-track {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .testimonial-item {
+      flex: 0 0 100%;
+      text-align: center;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .testimonial-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: #ecf0f1;
+      margin: 0 auto 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #34495e;
+    }
+
+    .testimonial-content h3 {
+      margin: 0;
+      font-size: 1.2rem;
+      color: #27ae60;
+    }
+
+    .testimonial-content p {
+      margin: 10px 0 0;
+      font-size: 1rem;
+      color: #7f8c8d;
+    }
+
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #27ae60;
+      color: #ffffff;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 1rem;
+      z-index: 2;
+    }
+
+    .carousel-btn.left {
+      left: 10px;
+    }
+
+    .carousel-btn.right {
+      right: 10px;
+    }
+
+    .carousel-btn:disabled {
+      background: #cccccc;
+      cursor: not-allowed;
+    }
+  </style>
+  <div class="testimonials-container">
+    <h1>Successful Users of Profit Plus</h1>
+    <div class="carousel">
+      <button class="carousel-btn left" id="prevBtn">&lt;</button>
+      <div class="carousel-track" id="carouselTrack">
+        <div class="testimonial-item">
+          <div class="testimonial-avatar">OM</div>
+          <div class="testimonial-content">
+            <h3>Oyebamiji Maryam</h3>
+            <p>"Profit Plus transformed my life! Within two months, I earned enough to pay for my school fees and even started my own small business. The training is top-notch, and the support system is excellent!"</p>
+          </div>
+        </div>
+        <div class="testimonial-item">
+          <div class="testimonial-avatar">SN</div>
+          <div class="testimonial-content">
+            <h3>Shittu Nimotallahi</h3>
+            <p>"Joining Profit Plus was the best decision I ever made. The ABIC course equipped me with skills in affiliate marketing and forex trading. Now, I earn consistently and have financial freedom."</p>
+          </div>
+        </div>
+        <div class="testimonial-item">
+          <div class="testimonial-avatar">QA</div>
+          <div class="testimonial-content">
+            <h3>Qazeem Aisha</h3>
+            <p>"I was skeptical at first, but Profit Plus proved me wrong. I learned 3D animation, and within weeks, I was making money creating content for brands. Highly recommend it to anyone looking to build real skills."</p>
+          </div>
+        </div>
+        <div class="testimonial-item">
+          <div class="testimonial-avatar">IA</div>
+          <div class="testimonial-content">
+            <h3>Ibrahim Awwal</h3>
+            <p>"Profit Plus gave me the tools and confidence to succeed. The weekly payouts are reliable, and the community is incredibly supportive. It's a great platform for anyone serious about making money online."</p>
+          </div>
+        </div>
+      </div>
+      <button class="carousel-btn right" id="nextBtn">&gt;</button>
+    </div>
+  </div>
+
+  <script>
+    const track = document.getElementById('carouselTrack');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const testimonials = document.querySelectorAll('.testimonial-item');
+    const totalItems = testimonials.length;
+
+    let currentIndex = 0;
+
+    function updateCarousel() {
+      const width = testimonials[0].getBoundingClientRect().width;
+      track.style.transform = `translateX(-${currentIndex * width}px)`;
+
+      // Enable/Disable buttons at boundaries
+      prevBtn.disabled = currentIndex === 0;
+      nextBtn.disabled = currentIndex === totalItems - 1;
+    }
+
+    // Event Listeners
+    prevBtn.addEventListener('click', () => {
+      if (currentIndex > 0) {
+        currentIndex--;
+        updateCarousel();
+      }
+    });
+
+    nextBtn.addEventListener('click', () => {
+      if (currentIndex < totalItems - 1) {
+        currentIndex++;
+        updateCarousel();
+      }
+    });
+
+    // Resize listener to adjust on window resize
+    window.addEventListener('resize', updateCarousel);
+
+    // Initialize carousel
+    updateCarousel();
+  </script>
+</section>
     
       	
 
