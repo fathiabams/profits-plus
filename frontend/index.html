@@ -1105,7 +1105,6 @@
   <style>
     body {
       font-family: 'Poppins', Arial, sans-serif;
-      
       margin: 0;
       padding: 0;
     }
@@ -1113,20 +1112,25 @@
     .testimonials-container {
       width: 90%;
       max-width: 800px;
-      margin: 50px auto;
-      background: #ffffff;
-      border-radius: 12px;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      margin: 30px auto;
+      text-align: center;
       padding: 20px;
-      overflow: hidden;
-      position: relative;
     }
 
-    .testimonials-container h1 {
-      text-align: center;
-      color: #2c3e50;
-      font-size: 2rem;
-      margin-bottom: 20px;
+    .testimonials-header h1 {
+      margin: 0;
+      font-size: 1.2rem;
+      color: black;
+      background-color: rgba(50, 205, 50, 0.3); /* Lighter, transparent green */
+      padding: 5px 15px;
+      display: inline-block;
+      border-radius: 5px;
+    }
+
+    .carousel {
+      overflow: hidden;
+      width: 100%;
+      position: relative;
     }
 
     .carousel-track {
@@ -1137,100 +1141,101 @@
     .testimonial-item {
       flex: 0 0 100%;
       text-align: center;
-      padding: 20px;
+      padding: 10px;
       box-sizing: border-box;
     }
 
     .testimonial-avatar {
-      width: 60px;
-      height: 60px;
+      width: 50px;
+      height: 50px;
       border-radius: 50%;
-      background: #ecf0f1;
-      margin: 0 auto 10px;
+      background: #e0e0e0;
+      margin: 0 auto 8px;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 1.2rem;
+      font-size: 1rem;
       font-weight: bold;
-      color: #34495e;
+      color: black;
     }
 
     .testimonial-content h3 {
       margin: 0;
-      font-size: 1.2rem;
-      color: #27ae60;
+      font-size: 1rem;
+      color: black;
     }
 
     .testimonial-content p {
-      margin: 10px 0 0;
-      font-size: 1rem;
-      color: #7f8c8d;
+      margin: 8px 0 0;
+      font-size: 0.9rem;
+      color: #555;
+      line-height: 1.4;
     }
 
+    /* Button styles */
     .carousel-btn {
-  position: absolute;
-  bottom: 10px; /* Move buttons to the bottom */
-  transform: translateX(-50%); /* Center the buttons horizontally */
-  background: #27ae60;
-  color: #ffffff;
-  border: none;
-  padding: 10px 15px;
-  cursor: pointer;
-  border-radius: 5px;
-  font-size: 1rem;
-  z-index: 2;
-}
+      background: black;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 0.9rem;
+      font-weight: bold;
+      cursor: pointer;
+      margin: 10px;
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
 
-.carousel-btn.left {
-  left: 10px;
-}
+    .carousel-btn:hover {
+      background: #333;
+      transform: scale(1.05);
+    }
 
-.carousel-btn.right {
-  right: 10px;
-}
-      
-
-
-    .carousel-btn:disabled {
-      background: #cccccc;
-      cursor: not-allowed;
+    .button-container {
+      text-align: center;
+      margin-top: 15px;
     }
   </style>
+
   <div class="testimonials-container">
-    <h1>Successful Users of Profit Plus</h1>
+    <div class="testimonials-header">
+      <h1>What Our Users Are Saying</h1>
+    </div>
     <div class="carousel">
-      <button class="carousel-btn left" id="prevBtn">&lt;</button>
       <div class="carousel-track" id="carouselTrack">
         <div class="testimonial-item">
           <div class="testimonial-avatar">OM</div>
           <div class="testimonial-content">
             <h3>Oyebamiji Maryam</h3>
-            <p>"Profit Plus transformed my life! Within two months, I earned enough to pay for my school fees and even started my own small business. The training is top-notch, and the support system is excellent!"</p>
+            <p>"Profit Plus transformed my life! Within two months, I earned enough to pay for my school fees and even started my own small business."</p>
           </div>
         </div>
         <div class="testimonial-item">
           <div class="testimonial-avatar">SN</div>
           <div class="testimonial-content">
             <h3>Shittu Nimotallahi</h3>
-            <p>"Joining Profit Plus was the best decision I ever made. The ABIC course equipped me with skills in affiliate marketing and forex trading. Now, I earn consistently and have financial freedom."</p>
+            <p>"Joining Profit Plus was the best decision I ever made. The ABIC course equipped me with skills in affiliate marketing and forex trading."</p>
           </div>
         </div>
         <div class="testimonial-item">
           <div class="testimonial-avatar">QA</div>
           <div class="testimonial-content">
             <h3>Qazeem Aisha</h3>
-            <p>"I was skeptical at first, but Profit Plus proved me wrong. I learned 3D animation, and within weeks, I was making money creating content for brands. Highly recommend it to anyone looking to build real skills."</p>
+            <p>"I was skeptical at first, but Profit Plus proved me wrong. I learned 3D animation and started making money creating content for brands."</p>
           </div>
         </div>
         <div class="testimonial-item">
           <div class="testimonial-avatar">IA</div>
           <div class="testimonial-content">
             <h3>Ibrahim Awwal</h3>
-            <p>"Profit Plus gave me the tools and confidence to succeed. The weekly payouts are reliable, and the community is incredibly supportive. It's a great platform for anyone serious about making money online."</p>
+            <p>"Profit Plus gave me the tools and confidence to succeed. The weekly payouts are reliable, and the community is incredibly supportive."</p>
           </div>
         </div>
       </div>
-      <button class="carousel-btn right" id="nextBtn">&gt;</button>
+      <div class="button-container">
+        <button class="carousel-btn" id="prevBtn">Previous</button>
+        <button class="carousel-btn" id="nextBtn">Next</button>
+      </div>
     </div>
   </div>
 
@@ -1252,7 +1257,6 @@
       nextBtn.disabled = currentIndex === totalItems - 1;
     }
 
-    // Event Listeners
     prevBtn.addEventListener('click', () => {
       if (currentIndex > 0) {
         currentIndex--;
@@ -1267,15 +1271,11 @@
       }
     });
 
-    // Resize listener to adjust on window resize
     window.addEventListener('resize', updateCarousel);
 
-    // Initialize carousel
     updateCarousel();
   </script>
-</section>
-    
-      	
+      </section>  	
 
     <section style="
           background-color: #05212f;
