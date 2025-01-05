@@ -940,44 +940,42 @@
             <div id="semiblockheadmargin" style=""></div>
         </div>
     </div>
-		
-    <section>
+	<section>
   <style>
     body {
       font-family: 'Poppins', Arial, sans-serif;
-      
       margin: 0;
       padding: 0;
     }
 
     .faq-container {
-      width: 90%;
-      max-width: 800px;
+      width: 95%;
+      max-width: 900px;
       margin: 50px auto;
-      background: #ffffff;
-      border-radius: 12px;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-      padding: 30px;
-      animation: fadeIn 1s ease-in-out;
     }
 
     .faq-container h1 {
       text-align: center;
-      color: #2c3e50;
+      color: black;
       font-size: 2.2rem;
-      margin-bottom: 25px;
+      margin-bottom: 30px;
       text-transform: uppercase;
       letter-spacing: 1.5px;
     }
 
     .faq-item {
-      border-bottom: 1px solid #ddd;
-      padding: 15px 0;
-      transition: background 0.3s ease-in-out, transform 0.3s;
+      background: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      margin: 20px 0;
+      padding: 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .faq-item:last-child {
-      border-bottom: none;
+    .faq-item:hover {
+      transform: scale(1.02);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
     }
 
     .faq-question {
@@ -985,37 +983,29 @@
       justify-content: space-between;
       align-items: center;
       cursor: pointer;
-      padding: 10px;
-      border-radius: 8px;
-      transition: background 0.3s ease-in-out, transform 0.3s ease;
-    }
-
-    .faq-question:hover {
-      background: #ecf0f1;
-      transform: scale(1.05);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     }
 
     .faq-question h3 {
       margin: 0;
-      font-size: 1.1rem;
-      color: #34495e;
+      font-size: 1.2rem;
+      color: black;
       font-weight: 600;
+      transition: color 0.3s ease-in-out;
     }
 
     .faq-question:hover h3 {
-      color: #27ae60;
+      color: #32cd32; /* Light green */
     }
 
-    .faq-question .arrow {
+    .faq-question .icon {
       font-size: 1.5rem;
-      color: #2c3e50;
+      font-weight: bold;
+      color: black;
       transition: transform 0.3s ease, color 0.3s ease;
     }
 
-    .faq-question:hover .arrow {
-      transform: rotate(180deg);
-      color: #27ae60;
+    .faq-question:hover .icon {
+      color: #32cd32; /* Light green */
     }
 
     .faq-answer {
@@ -1023,12 +1013,13 @@
       overflow: hidden;
       transition: max-height 0.4s ease-in-out, opacity 0.4s ease-in-out;
       opacity: 0;
+      padding-top: 10px;
     }
 
     .faq-answer p {
-      margin: 10px 0 0;
-      font-size: 0.95rem;
-      color: #7f8c8d;
+      margin: 0;
+      font-size: 1rem;
+      color: black;
       line-height: 1.6;
     }
 
@@ -1037,81 +1028,79 @@
       opacity: 1;
     }
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(-20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .faq-item.active .icon {
+      content: "−";
+      color: #32cd32;
     }
   </style>
+
   <div class="faq-container">
     <h1>Frequently Asked Questions</h1>
     <div class="faq-item">
       <div class="faq-question">
         <h3>What is Profit Plus about?</h3>
-        <span class="arrow">&#9662;</span>
+        <span class="icon">+</span>
       </div>
       <div class="faq-answer">
-        <p>Profit Plus is a digital marketplace that facilitates the sale of high-value digital and physical products. It connects skilled affiliates—marketers who promote and recommend products—with vendors who create these products. The platform offers a reliable payment system, high commission rates (up to 75% per sale), a curated product marketplace, regular training for affiliates, and strong support to ensure a seamless experience. </p>
+        <p>Profit Plus is a digital marketplace that facilitates the sale of high-value digital and physical products. It connects skilled affiliates—marketers who promote and recommend products—with vendors who create these products. The platform offers a reliable payment system, high commission rates (up to 75% per sale), a curated product marketplace, regular training for affiliates, and strong support to ensure a seamless experience.</p>
       </div>
     </div>
     <div class="faq-item">
       <div class="faq-question">
         <h3>How do I make sales?</h3>
-        <span class="arrow">&#9662;</span>
+        <span class="icon">+</span>
       </div>
       <div class="faq-answer">
-        <p> To make sales on Profit Plus, you can register as an affiliate, gain access to the product marketplace, and select products to promote. By sharing your unique affiliate links and effectively marketing the products, you earn commissions on each sale made through your link. The platform provides regular training to enhance your sales and marketing skills, helping you maximize your earnings.</p>
+        <p>To make sales on Profit Plus, you can register as an affiliate, gain access to the product marketplace, and select products to promote. By sharing your unique affiliate links and effectively marketing the products, you earn commissions on each sale made through your link. The platform provides regular training to enhance your sales and marketing skills, helping you maximize your earnings.</p>
       </div>
     </div>
     <div class="faq-item">
       <div class="faq-question">
         <h3>What is the ABIC course about?</h3>
-        <span class="arrow">&#9662;</span>
+        <span class="icon">+</span>
       </div>
       <div class="faq-answer">
-        <p>The ABIC course teaches affiliate marketing, forex, 3D animations, and monetization. It shows how to leverage affiliate marketing to fund your forex account, take trades based on strategies you learn, and get started with creating and monetizing 3D animations. These skills can help you say goodbye to financial struggles for good!
-</p>
+        <p>The ABIC course teaches affiliate marketing, forex, 3D animations, and monetization. It shows how to leverage affiliate marketing to fund your forex account, take trades based on strategies you learn, and get started with creating and monetizing 3D animations. These skills can help you say goodbye to financial struggles for good!</p>
       </div>
     </div>
     <div class="faq-item">
       <div class="faq-question">
         <h3>How do I get paid on Profit Plus?</h3>
-        <span class="arrow">&#9662;</span>
+        <span class="icon">+</span>
       </div>
       <div class="faq-answer">
-        <p>Profit Plus has a solid payment system that ensures you receive payments for every sale made through your affiliate links. Earnings are paid out weekly, with withdrawals processed on Sundays, allowing you to receive your money in your preferred bank account. The platform supports earnings in multiple currencies and offers favorable exchange rates for local bank deposits.
-</p>
+        <p>Profit Plus has a solid payment system that ensures you receive payments for every sale made through your affiliate links. Earnings are paid out weekly, with withdrawals processed on Sundays, allowing you to receive your money in your preferred bank account. The platform supports earnings in multiple currencies and offers favorable exchange rates for local bank deposits.</p>
       </div>
     </div>
     <div class="faq-item">
       <div class="faq-question">
         <h3>Where can I find answers to more questions?</h3>
-        <span class="arrow">&#9662;</span>
+        <span class="icon">+</span>
       </div>
       <div class="faq-answer">
-        <p>You can find more answers on the Profit Plus platform. Visit theprofitplus.com.ng for additional details and updates.
-</p>
+        <p>You can find more answers on the Profit Plus platform. Visit theprofitplus.com.ng for additional details and updates.</p>
       </div>
     </div>
   </div>
+
   <script>
     document.querySelectorAll('.faq-question').forEach(question => {
       question.addEventListener('click', () => {
         const faqItem = question.parentElement;
+        const icon = question.querySelector('.icon');
         faqItem.classList.toggle('active');
+        icon.textContent = faqItem.classList.contains('active') ? '−' : '+';
+
         document.querySelectorAll('.faq-item').forEach(item => {
-          if (item !== faqItem) item.classList.remove('active');
+          if (item !== faqItem) {
+            item.classList.remove('active');
+            item.querySelector('.icon').textContent = '+';
+          }
         });
       });
     });
   </script>
-</section>
-				
+	</section>				
       <section>
   <style>
     body {
