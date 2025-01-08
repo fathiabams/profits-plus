@@ -1,1 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Course</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9; /* Lighter background */
+        }
 
+        /* Sidebar Navbar */
+        .sidebar {
+            width: 250px;
+            background-color: #81c784; /* Lighter green color */
+            color: white;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding-top: 20px;
+            transition: width 0.3s;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Added shadow */
+        }
+
+        .sidebar .navbar-nav {
+            flex-direction: column;
+        }
+
+        .sidebar .nav-item {
+            width: 100%;
+        }
+
+        .sidebar .nav-item a {
+            color: white;
+            padding: 12px 15px;
+            text-decoration: none;
+            font-size: 18px;
+            display: block;
+            transition: background-color 0.3s, transform 0.2s; /* Added transition */
+        }
+
+        .sidebar .nav-item a:hover {
+            background-color: #66bb6a; /* Darker green on hover */
+            transform: scale(1.05); /* Scale effect on hover */
+        }
+
+        .sidebar .nav-item.active a {
+            background-color: #388e3c; /* Active link color */
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            transition: margin-left 0.3s;
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 800px; /* Adjusted width */
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: auto;
+            transition: transform 0.3s; /* Added transition */
+        }
+
+        .form-container:hover {
+            transform: scale(1.02); /* Scale effect on hover */
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333; /* Darker text color */
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-size: 16px;
+            font-weight: bold;
+            display: block;
+        }
+
+        input[type="text"], input[type="email"], input[type="checkbox"] {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            margin-top: 5px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 12px 20px;
+            font-size: 16px;
+            background-color: #800080; /* Lighter green button color */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            width: 100%;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s; /* Added transition */
+        }
+
+        button:hover {
+            background-color: #6c3376; /* Darker green on hover */
+            transform: scale(1.05); /* Scale effect on hover */
+        }
+
+        .message {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        .error {
+            color: red;
+        }
+
+        .success {
+            color: green;
+        }
+
+        .help-text {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .help-text a {
+            color: #2980b9; /* Colored link */
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .help-text a:hover {
+            text-decoration: underline;
+        }
+
+        /* Popup Modal */
+        .popup-modal {
+            display: none;
+                       position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .popup-modal .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            width: 90%; /* Responsive width */
+            max-width: 500px; /* Max width for larger screens */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .popup-modal button {
+            background-color: #f44336;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .popup-modal button:hover {
+            background-color: #d32f2f;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                padding-top: 10px;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .form-container {
+                padding: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h2 {
+                font-size: 20px;
+            }
+
+            button {
+                font-size: 14px;
+            }
+
+            .form-container {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sidebar">
+        <a class="navbar-brand" href="#">Course Dashboard</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="My courses.html">My Courses</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="My course withdrawal.html">My Course Withdrawal</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="form-container">
+            <h2>Upload Your Course</h2>
+            <form id="courseForm" method="POST">
+                <div class="form-group">
+                    <label for="sellerName">Seller Name</label>
+                    <input type="text" id="sellerName" name="sellerName" required placeholder="Enter your registered seller name" minlength="3">
+                    <small style="color: #999;">* Seller name must match the name you registered with</small>
+                </div>
+                <div class="form-group">
+                    <label for="courseName">Course Name</label>
+                    <input type="text" id="courseName" name="courseName" required placeholder="Enter the course name">
+                </div>
+                <div class="form-group">
+                    <label for="gmail">Gmail</label>
+                    <input type="email" id="gmail" name="gmail" required placeholder="Enter your Gmail address">
+                </div>
+                <div class="form-group">
+                    <label for="examCertificate">
+                        <input type="checkbox" id="examCertificate" name="examCertificate"> Add Exam & Certificate (15,000 NGN/month)
+                    </label>
+                </div>
+
+                <button type="submit">Submit Course</button>
+                <div id="loading" style="display:none; text-align:center; margin-top:10px;">Loading...</div>
+            </form>
+
+            <div id="message" class="message"></div>
+
+            <div class="help-text">
+                <p>If you're unsure about how to upload your course, please <a href="vendors.html">click here</a> for more instructions.</p>
+            </div>
+
+            <!-- Button to view the explanation -->
+            <button id="viewExplanationBtn" onclick="toggleExplanation()">Why is the 15,000 NGN Payment Important?</button>
+
+            <!-- Explanation Modal (Hidden by default) -->
+                        <div id="explanationModal" class="popup-modal">
+                <div class="modal-content">
+                    <h4>Why is the Exam and Certificate Important?</h4>
+                    <p>Adding an exam and a ProfitPlus-branded certificate to your course increases its credibility and attractiveness to students. It gives students something tangible to show for completing the course, enhancing its value. This helps boost sales and makes your course
+                    stand out in the marketplace. For only 15,000 NGN per month, your course can have the added benefits of a certificate, encouraging more students to buy it!</p>
+                    <button onclick="closeModal()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        // Handle form submission
+        document.getElementById('courseForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent form from submitting normally
+            document.getElementById('loading').style.display = 'block'; // Show loading
+
+            // Collect form data
+            const sellerName = document.getElementById('sellerName').value;
+            const courseName = document.getElementById('courseName').value;
+            const gmail = document.getElementById('gmail').value; // Collect Gmail
+            const examCertificate = document.getElementById('examCertificate').checked;
+
+            // Create form data to send to the backend
+            const formData = new FormData();
+            formData.append('sellerName', sellerName);
+            formData.append('courseName', courseName);
+            formData.append('gmail', gmail); // Append Gmail to form data
+            formData.append('examCertificate', examCertificate);
+
+            // Send the data to the backend API
+            fetch('/api/upload-course', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                const messageElement = document.getElementById('message');
+                messageElement.textContent = data.message;
+                messageElement.classList.toggle('success', data.success);
+                messageElement.classList.toggle('error', !data.success);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('message').textContent = 'An error occurred: ' + error.message;
+                document.getElementById('message').classList.add('error');
+            })
+            .finally(() => {
+                document.getElementById('loading').style.display = 'none'; // Hide loading
+            });
+        });
+
+        // Function to toggle the explanation modal
+        function toggleExplanation() {
+            const modal = document.getElementById('explanationModal');
+            modal.style.display = 'flex'; // Show the modal
+        }
+
+        // Function to close the modal
+        function closeModal() {
+            const modal = document.getElementById('explanationModal');
+            modal.style.display = 'none'; // Hide the modal
+        }
+    </script>
+</body>
+      </html>
