@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Courses</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f8f0; /* Light Green Background */
+            color: #333;
+        }
+        header {
+            background-color: #e6e6fa; /* Lavender Header */
+            color: #333;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 3px solid #8fbc8f; /* Light Green Accent */
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #7A288A; /* Light Green Button */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #C7B8EA; /* Darker Green on Hover */
+        }
+        #course-list {
+            margin-top: 20px;
+        }
+        .course-item {
+            background: #e6e6fa; /* Lavender Course Item */
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #8fbc8f; /* Light Green Border */
+            border-radius: 5px;
+        }
+        .error {
+            color: #ff4d4d; /* Red for Error Messages */
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>My Courses</h1>
+    </header>
+
+    <div class="container">
+        <!-- Input for Gmail -->
+        <label for="gmail">Enter your Gmail:</label>
+        <input type="email" id="gmail" placeholder="Enter your Gmail" required />
+
+        <!-- Button to Generate Courses -->
+        <button id="generate-course-btn">Generate Courses</button>
+
+        <!-- Display Courses -->
+        <div id="course-list"></div>
+
+        <!-- Error Messages -->
+        <div id="error-message" class="error"></div>
+    </div>
+
+    <script>
+        document.getElementById('generate-course-btn').addEventListener('click', async () => {
+            const email = document.getElementById('gmail').value.trim();
+            const courseListDiv = document.getElementById('course-list');
+            const errorMessageDiv = document.getElementById('error-message');
+
+            // Clear previous results and error messages
+            courseListDiv.innerHTML = "";
+            errorMessageDiv.textContent = "";
+
+            // Validate Gmail input
+            if (!email) {
+                errorMessageDiv.textContent = "Please enter a valid Gmail address.";
+                return;
+            }
+
+            try {
+                // Call the API to fetch courses
+                const response = await fetch(`/api/v1/fetch-user-courses?email=${email}`);
+                const data = await response.json();
+
+                if (data.success) {
+                    // Populate the course list
+                    data.courses.forEach(course => {
+                        const courseItem = document.createElement('div');
+                        courseItem.className = 'course-item';
+                        courseItem.textContent = `Course: ${course.name}, Seller: ${course.sellerName}`;
+                        courseListDiv.appendChild(courseItem);
+                    });
+                } else {
+                    errorMessageDiv.textContent = data.message;
+                }
+            } catch (error) {
+                console.error("Error fetching courses:", error);
+                errorMessageDiv.textContent = "Failed to fetch courses. Please try again later.";
+            }
+        });
+    </script>
+</body>
+</html>
