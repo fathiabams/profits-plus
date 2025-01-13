@@ -9,7 +9,7 @@ const jwt = require("jsonwebtoken")
 const courseuser= require('../model/courseschema.js')
 const registerAndPay = async (req, res) => {
     const amount =400000
-    const { name, email, phone, password, courseid} = req.body;
+    const { name, email, password, courseid} = req.body;
     console.log(name);
 
     const reference = `REF-${Date.now()}`;
@@ -23,7 +23,7 @@ const registerAndPay = async (req, res) => {
             user = await courseuser.create({
                 name,
                 email,
-                phone,
+                //phone,
                 password: hashedPassword,
                 courseid
             });
