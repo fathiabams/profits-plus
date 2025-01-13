@@ -31,10 +31,59 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
 
+    <style>
+        @media screen and (min-width: 990px) {
+            .navbar-custom {
+                left: 260px;
+            }
+        }
+        @media (max-width: 767px) {
+            .sidebar {
+                display: none;
+                position: absolute;
+                left: -250px;
+                top: 0;
+                width: 250px;
+                height: 100%;
+                background-color: #eee;
+                transition: left 0.3s ease;
+        }
+
+        sidebar.active {
+            display: block;
+            left: 0;
+        }
+
+        .navbar-toggler {
+            display: block;
+            cursor: pointer;
+            position: relative;
+            z-index: 1100;
+        }
+
+        .navbar-toggler-icon {
+            display: block;
+            width: 30px;
+            height: 4px;
+            margin: 6px auto;
+            background-color: black;
+        }
+
+        .navbar-toggler.active .navbar-toggler-icon {
+            background-color: #fff;
+        }
+  </style>
+
 </head>
 
 <body class="" data-new-gr-c-s-check-loaded="14.1084.0" data-gr-ext-installed="">
-    <div class="wrapper ">
+    <div class="wrapper">
+        <!-- Hamburger Icon -->
+        <div class="navbar-toggler" id="navbar-toggler">
+            <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon"></span>
+        </div>
 
         <div class="sidebar" data-color="white" data-background-color="green" data-image="assets/img/sidebar-1.jpg">
 
@@ -43,7 +92,7 @@
                     <img style="max-width:150px" src="../logo/prompt.png">
                 </a>
             </div>
-            <!-- <div class="sidebar-wrapper ps-container ps-theme-default ps-active-y"
+            <div class="sidebar-wrapper ps-container ps-theme-default ps-active-y"
 
                 data-ps-id="bb0b7c91-31cf-fd28-7d55-6a5a95ca4059">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -126,7 +175,7 @@
                     <div class="ps-scrollbar-y-rail" style="top: 0px; height: 543px; right: 0px;">
                         <div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 335px;"></div>
                     </div>
-            </div> -->
+            </div>
                         <div class="sidebar-wrapper">
                             <ul class="nav">
                                 <li class="nav-item">
@@ -440,6 +489,26 @@
 
         });
     </script>
+    <script>
+    $(document).ready(function() {
+        // Toggle the sidebar when the hamburger menu is clicked
+        $('#navbar-toggler').click(function() {
+            $('.sidebar').toggleClass('open');
+            $(this).toggleClass('active');
+        });
+    });
+</script>      
+
+<script>
+  // Get the hamburger button and the sidebar
+  const navbarToggler = document.querySelector(".navbar-toggler");
+  const sidebar = document.querySelector(".sidebar");
+
+  // Toggle sidebar visibility on button click
+  navbarToggler.addEventListener("click", () => {
+    sidebar.classList.toggle("active");
+  });
+</script>
 
 
 </body><grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration>
