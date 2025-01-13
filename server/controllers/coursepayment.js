@@ -7,33 +7,31 @@ const axios = require('axios');
 const nodemailer = require('nodemailer')
 const jwt = require("jsonwebtoken")
 const courseuser= require('../model/courseschema.js')
-
 const registerAndPay = async (req, res) => {
-    const amount = 400000; // Course fee
-    const { name, phone, courseid } = req.body; // Removed email and password from the body
+    const amount =400000
+    const { name, email, phone, password, courseid} = req.body;
+    console.log(name);
+
     const reference = `REF-${Date.now()}`;
+  
     const callbackUrl = "https://profitplusbackend.com.ng/api/v1/payment-callback";
 
     try {
-        const user = req.user; // Get logged-in user details from middleware
+        let user = await User.findOne({ email });
         if (!user) {
-            return res.status(401).json({ success: false, message: "User not authenticated" });
+            const hashedPassword = await bcrypt.hash(password, 10);
+            user = await courseuser.create({
+                name,
+                email,
+                phone,
+                password: hashedPassword,
+                courseid
+            });
+        } else {
+            res.status(401).json({ message: "User Exist" });
         }
-
-        const existingCourseUser = await courseuser.findOne({ userId: user._id, courseid });
-        if (existingCourseUser) {
-            return res.status(400).json({ success: false, message: "You are already registered for this course" });
-        }
-
-        const newCourseUser = await courseuser.create({
-            userId: user._id,
-            name: name || user.name, // Use provided name or default to the logged-in user's name
-            phone: phone || user.phone, // Use provided phone or default to the logged-in user's phone
-            courseid,
-        });
-
         const paymentData = await initializePayment(
-            user.email,
+            email,
             amount,
             reference,
             callbackUrl
@@ -55,14 +53,15 @@ const registerAndPay = async (req, res) => {
         });
     } catch (error) {
         console.error("Payment initialization error:", error.message);
-        res.status(500).json({
-            success: false,
-            message: "Payment initialization failed",
-            error: error.message,
-        });
+        res
+            .status(500)
+            .json({
+                success: false,
+                message: "Payment initialization failed",
+                error: error.message,
+            });
     }
 };
-
 
 const paymentcallback = async (req, res) => {
     const { reference, trxref } = req.query;

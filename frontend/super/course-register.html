@@ -123,20 +123,20 @@
             <input type="text" id="name" name="name" placeholder="John Doe" required />
         </div>
 
-        <!-- <div class="form-group">
+        <div class="form-group">
             <label for="email">Email Address</label>
             <input type="email" id="email" name="email" placeholder="your@email.com" required />
-        </div>-->
+        </div>
 
         <div class="form-group">
             <label for="phone">Phone Number</label>
             <input type="text" id="phone" name="phone" placeholder="1234567890" required />
         </div>
 
-        <!--<div class="form-group">
+        <div class="form-group">
             <label for="password">Password</label>
             <input type="password" id="password" name="password" placeholder="Choose a password" required />
-        </div>-->
+        </div>
 
         <div class="form-group">
             <label for="country">Country</label>
@@ -169,30 +169,35 @@
     <script>
         const registerForm = document.getElementById("register-form");
 
-registerForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
+        registerForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
 
-    const formData = new FormData(registerForm);
+            const formData = new FormData(registerForm);
+            const data = new URLSearchParams(formData).toString(); // URL-encoded format
+            console.log(data);
 
-    try {
-        const token = localStorage.getItem("token"); // Assuming the token is stored in localStorage
-        const response = await axios.post("https://profits-plus-backend.onrender.com/api/register-and-pay", Object.fromEntries(formData), {
-            headers: {
-                "Authorization": `Bearer ${token}`,
-            },
+            try {
+                const response = await axios.post("https://profits-plus-backend.onrender.com/api/register-and-pay", data, {
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded", // Specify URL-encoded content type
+                    },
+                });
+
+                console.log(response.data);
+
+                if (response.data.success) {
+                    window.location.href = response.data.authorizationUrl; // Redirect to Paystack
+                } else {
+                    console.error(response.data.error);
+                    alert(response.data.message);
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                alert(
+                    "An error occurred while processing your request. Please try again."
+                );
+            }
         });
-
-        if (response.data.success) {
-            window.location.href = response.data.authorizationUrl;
-        } else {
-            alert(response.data.message);
-        }
-    } catch (error) {
-        console.error("Error:", error);
-        alert("An error occurred while processing your request. Please try again.");
-    }
-});
-
     </script>
 
 </body>

@@ -16,7 +16,7 @@ const protect = asyncHandler(async (req, res, next) => {
         try {
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
             const decodeduser = await User.findById(decoded.id).select("-password");
-            req.auth = decodeduser._id; // Attach the user's ID to the request object
+            req.auth= decodeduser._id
             next();
         } catch (error) {
             if (error instanceof jwt.TokenExpiredError) {
