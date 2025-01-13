@@ -114,28 +114,15 @@
 </head>
 
 <body>
-    <!-- Register Form -->
-    <form id="register-form">
-        <h2>Register</h2>
+    <!-- Course Registration Form -->
+    <form id="course-register-form">
+        <h2>Course Registration</h2>
         <input type="hidden" name="courseid" id="courseid" value="course-abc-u123445">
-        <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name" placeholder="John Doe" required />
-        </div>
-
-        <div class="form-group">
-            <label for="email">Email Address</label>
-            <input type="email" id="email" name="email" placeholder="your@email.com" required />
-        </div>
-
+        
+        <!-- Remove email field since the user is logged in -->
         <div class="form-group">
             <label for="phone">Phone Number</label>
             <input type="text" id="phone" name="phone" placeholder="1234567890" required />
-        </div>
-
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" placeholder="Choose a password" required />
         </div>
 
         <div class="form-group">
@@ -158,30 +145,38 @@
         </div>
 
         <button type="submit">Register and Pay</button>
-
-        <p>
-            Already have an account?
-            <a href="#" id="already-have-account-link">Login</a>
-        </p>
     </form>
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
-        const registerForm = document.getElementById("register-form");
+        const courseRegisterForm = document.getElementById("course-register-form");
 
-        registerForm.addEventListener("submit", async (e) => {
+        courseRegisterForm.addEventListener("submit", async (e) => {
             e.preventDefault();
 
-            const formData = new FormData(registerForm);
-            const data = new URLSearchParams(formData).toString(); // URL-encoded format
-            console.log(data);
+            // Get the logged-in user's token from localStorage
+            const token = localStorage.getItem("authToken");
+            if (!token) {
+                alert("You must be logged in to register for a course.");
+                window.location.href = "/login.html"; // Redirect to login page
+                return;
+            }
+
+            // Prepare form data
+            const formData = new FormData(courseRegisterForm);
+            const data = Object.fromEntries(formData.entries()); // Convert FormData to object
 
             try {
-                const response = await axios.post("https://profits-plus-backend.onrender.com/api/register-and-pay", data, {
-                    headers: {
-                        "Content-Type": "application/x-www-form-urlencoded", // Specify URL-encoded content type
-                    },
-                });
+                const response = await axios.post(
+                    "https://profits-plus-backend.onrender.com/api/register-and-pay",
+                    data,
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${token}`, // Include the token in the request
+                        },
+                    }
+                );
 
                 console.log(response.data);
 
@@ -193,13 +188,9 @@
                 }
             } catch (error) {
                 console.error("Error:", error);
-                alert(
-                    "An error occurred while processing your request. Please try again."
-                );
+                alert("An error occurred while processing your request. Please try again.");
             }
         });
     </script>
-
 </body>
-
 </html>

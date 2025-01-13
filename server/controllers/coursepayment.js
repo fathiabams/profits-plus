@@ -7,45 +7,41 @@ const axios = require('axios');
 const nodemailer = require('nodemailer')
 const jwt = require("jsonwebtoken")
 const courseuser= require('../model/courseschema.js')
+
 const registerAndPay = async (req, res) => {
     const amount = 400000; // Fixed amount for the course
-    const { name, email, phone, password, courseid } = req.body;
-    const reference = `REF-${Date.now()}`;
-    const callbackUrl = "https://profitplusbackend.com.ng/api/v1/payment-callback";
+    const { phone, country, courseid } = req.body;
+
+    // Get the logged-in user's ID from the authentication middleware
+    const userId = req.auth; // This is set by the `protect` middleware
 
     try {
-        // Check if the user exists in the normal User collection
-        let user = await User.findOne({ email });
-
+        // Fetch the logged-in user's details from the database
+        const user = await User.findById(userId);
         if (!user) {
-            // If the user doesn't exist, create a new user in the User collection
-            const hashedPassword = await bcrypt.hash(password, 10);
-            user = await User.create({
-                name,
-                email,
-                phone,
-                password: hashedPassword,
-            });
+            return res.status(404).json({ message: "User not found." });
         }
 
         // Check if the user is already registered for the course
-        const existingCourseUser = await courseuser.findOne({ email, courseid });
+        const existingCourseUser = await courseuser.findOne({ email: user.email, courseid });
         if (existingCourseUser) {
-            return res.status(400).json({ message: "User is already registered for this course." });
+            return res.status(400).json({ message: "You are already registered for this course." });
         }
 
-        // Register the user for the course
-        const courseRegistration = await courseuser.create({
+        // Create a new course registration for the user
+        const newCourseUser = await courseuser.create({
             name: user.name,
             email: user.email,
-            phone: user.phone,
-            password: user.password, // Use the existing hashed password
+            phone,
             courseid,
         });
 
         // Initialize payment
+        const reference = `REF-${Date.now()}`;
+        const callbackUrl = "https://profitplusbackend.com.ng/api/v1/payment-callback";
+
         const paymentData = await initializePayment(
-            email,
+            user.email,
             amount,
             reference,
             callbackUrl
@@ -61,6 +57,7 @@ const registerAndPay = async (req, res) => {
         });
         await payment.save();
 
+        // Return the payment authorization URL
         res.json({
             success: true,
             authorizationUrl: paymentData.authorization_url,

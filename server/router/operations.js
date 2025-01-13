@@ -68,7 +68,7 @@ appRouter.route("/api/get-all-user-courses").get(protect, getUserCourses);
 appRouter.route("/api/sales").post(protect, commissionsales);
 
 // Course Payment Routes
-appRouter.route("/api/register-and-pay").post(registerAndPay);
+appRouter.route("/api/register-and-pay").post(protect, registerAndPay);
 appRouter.route("/api/payment-callback").get(paymentcallback);
 
 // Transaction Status Route
