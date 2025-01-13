@@ -8,28 +8,42 @@ const nodemailer = require('nodemailer')
 const jwt = require("jsonwebtoken")
 const courseuser= require('../model/courseschema.js')
 const registerAndPay = async (req, res) => {
-    const amount =400000
-    const { name, email, phone, password, courseid} = req.body;
-    console.log(name);
-
+    const amount = 400000; // Fixed amount for the course
+    const { name, email, phone, password, courseid } = req.body;
     const reference = `REF-${Date.now()}`;
-  
     const callbackUrl = "https://profitplusbackend.com.ng/api/v1/payment-callback";
 
     try {
+        // Check if the user exists in the normal User collection
         let user = await User.findOne({ email });
+
         if (!user) {
+            // If the user doesn't exist, create a new user in the User collection
             const hashedPassword = await bcrypt.hash(password, 10);
-            user = await courseuser.create({
+            user = await User.create({
                 name,
                 email,
                 phone,
                 password: hashedPassword,
-                courseid
             });
-        } else {
-            res.status(401).json({ message: "User Exist" });
         }
+
+        // Check if the user is already registered for the course
+        const existingCourseUser = await courseuser.findOne({ email, courseid });
+        if (existingCourseUser) {
+            return res.status(400).json({ message: "User is already registered for this course." });
+        }
+
+        // Register the user for the course
+        const courseRegistration = await courseuser.create({
+            name: user.name,
+            email: user.email,
+            phone: user.phone,
+            password: user.password, // Use the existing hashed password
+            courseid,
+        });
+
+        // Initialize payment
         const paymentData = await initializePayment(
             email,
             amount,
@@ -37,6 +51,7 @@ const registerAndPay = async (req, res) => {
             callbackUrl
         );
 
+        // Save payment details
         const payment = new Payment({
             userId: user._id,
             amount,
@@ -53,13 +68,11 @@ const registerAndPay = async (req, res) => {
         });
     } catch (error) {
         console.error("Payment initialization error:", error.message);
-        res
-            .status(500)
-            .json({
-                success: false,
-                message: "Payment initialization failed",
-                error: error.message,
-            });
+        res.status(500).json({
+            success: false,
+            message: "Payment initialization failed",
+            error: error.message,
+        });
     }
 };
 
