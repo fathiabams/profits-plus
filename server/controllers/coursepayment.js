@@ -9,36 +9,28 @@ const jwt = require("jsonwebtoken")
 const courseuser= require('../model/courseschema.js')
 
 const registerAndPay = async (req, res) => {
-    const amount = 400000; // Fixed amount for the course
-    const { phone, country, courseid } = req.body;
-
-    // Get the logged-in user's ID from the authentication middleware
-    const userId = req.auth; // This is set by the `protect` middleware
+    const amount = 400000; // Course fee
+    const { name, phone, courseid } = req.body; // Removed email and password from the body
+    const reference = `REF-${Date.now()}`;
+    const callbackUrl = "https://profitplusbackend.com.ng/api/v1/payment-callback";
 
     try {
-        // Fetch the logged-in user's details from the database
-        const user = await User.findById(userId);
+        const user = req.user; // Get logged-in user details from middleware
         if (!user) {
-            return res.status(404).json({ message: "User not found." });
+            return res.status(401).json({ success: false, message: "User not authenticated" });
         }
 
-        // Check if the user is already registered for the course
-        const existingCourseUser = await courseuser.findOne({ email: user.email, courseid });
+        const existingCourseUser = await courseuser.findOne({ userId: user._id, courseid });
         if (existingCourseUser) {
-            return res.status(400).json({ message: "You are already registered for this course." });
+            return res.status(400).json({ success: false, message: "You are already registered for this course" });
         }
 
-        // Create a new course registration for the user
         const newCourseUser = await courseuser.create({
-            name: user.name,
-            email: user.email,
-            phone,
+            userId: user._id,
+            name: name || user.name, // Use provided name or default to the logged-in user's name
+            phone: phone || user.phone, // Use provided phone or default to the logged-in user's phone
             courseid,
         });
-
-        // Initialize payment
-        const reference = `REF-${Date.now()}`;
-        const callbackUrl = "https://profitplusbackend.com.ng/api/v1/payment-callback";
 
         const paymentData = await initializePayment(
             user.email,
@@ -47,7 +39,6 @@ const registerAndPay = async (req, res) => {
             callbackUrl
         );
 
-        // Save payment details
         const payment = new Payment({
             userId: user._id,
             amount,
@@ -57,7 +48,6 @@ const registerAndPay = async (req, res) => {
         });
         await payment.save();
 
-        // Return the payment authorization URL
         res.json({
             success: true,
             authorizationUrl: paymentData.authorization_url,
@@ -72,6 +62,7 @@ const registerAndPay = async (req, res) => {
         });
     }
 };
+
 
 const paymentcallback = async (req, res) => {
     const { reference, trxref } = req.query;
