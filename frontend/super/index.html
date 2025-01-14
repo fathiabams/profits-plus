@@ -787,7 +787,18 @@ initiateWithdraw(amount, bankName, accountNumber);
         sidebar.classList.toggle('active');
     }
 </script>
+<script>
+    $(document).ready(function() {
+    if ($(window).width() > 767) {
+        $('.main-panel').perfectScrollbar();
+    }
 
+    $('#navbar-toggler').click(function() {
+        $('.sidebar').toggleClass('open');
+        $(this).toggleClass('active');
+    });
+});
+</script>
 <script>
     $(document).ready(function() {
         // Toggle the sidebar when the hamburger menu is clicked
