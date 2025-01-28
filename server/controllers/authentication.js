@@ -309,7 +309,7 @@ module.exports = { getUserCourses };
 module.exports = {
   adminlogin,
   userlogin,
-  userregister,
+  userRegister,
   resetpassword,
   verifyemail,
   createCourse,
