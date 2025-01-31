@@ -11,6 +11,7 @@ const allowedOrigin = [
     "https://profits-plus-backend.onrender.com",
     "https://www.theprofitplus.com.ng",
     'https://www.theprofitplus.com.ng',
-    'https://theprofitplus.com.ng'
+    'https://theprofitplus.com.ng',
+    'backend-api.theprofitplus.com.ng'
 ];
 module.exports = allowedOrigin;
